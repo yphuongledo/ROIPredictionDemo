@@ -394,11 +394,11 @@
     <h1 class="entry-h1">Watch AI answer your leads <em>right now</em></h1>
     <p class="entry-sub">Enter your business website or Facebook page and we'll instantly show you how Revenue Capture AI would work for <em>your</em> customers.</p>
 
-    <form
+  <form
   class="url-form"
   action="https://n8n.securegreen.co/webhook/GetWebInfo"
   method="POST"
-  onsubmit="startFromURL()">
+  onsubmit="startFromURL()"
   <div class="url-input-wrap">
     <span class="url-icon">🌐</span>
 
@@ -416,14 +416,13 @@
     <button class="url-btn" id="urlBtn" type="submit">
       Show Me →
     </button>
-  </div>
-
+  
   <div class="url-fallback">
     No website yet?
     <a onclick="showFallback()">Tell us your industry instead</a>
   </div>
 </form>
-
+</div>
     <div id="industry-fallback">
       <div class="fi-label">Business name (optional)</div>
       <input class="fi-input" id="bizName" type="text" placeholder="e.g. Apex Roofing, Smith Dental…"/>
