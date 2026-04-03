@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -394,54 +394,87 @@
     <h1 class="entry-h1">Watch AI answer your leads <em>right now</em></h1>
     <p class="entry-sub">Enter your business website or Facebook page and we'll instantly show you how Revenue Capture AI would work for <em>your</em> customers.</p>
 
-	<div class="url-form">
-	  <div class="url-input-wrap">
-		<span class="url-icon">🌐</span>
-		
-		<input 
-		  class="url-input" 
-		  id="urlInput" 
-		  type="text"
-		  placeholder="yourwebsite.com or facebook.com/yourbusiness"
-		  autocomplete="off" 
-		  spellcheck="false"
-		  onkeydown="if(event.key==='Enter') startFromURL(event)"
-		/>
+    <!--<div class="url-form">
+        <div class="url-input-wrap">
+            <span class="url-icon">🌐</span>
 
-		<button 
-		  class="url-btn" 
-		  id="urlBtn" 
-		  onclick="startFromURL(event)"
-		>
-		  Show Me →
-		</button>
-	  </div>
+            <input class="url-input"
+                   id="urlInput"
+                   type="text"
+                   placeholder="yourwebsite.com or facebook.com/yourbusiness"
+                   autocomplete="off"
+                   spellcheck="false"
+                   onkeydown="if(event.key==='Enter') startFromURL(event)" />
+            <button class="url-btn"
+                    id="urlBtn"
+                    onclick="startFromURL(event)">
+                Show Me →
+            </button>
+        </div>
+        <div>
+            <input class="fi-input" id="txtPhone" type="tel" placeholder="Your phone number" />
+        </div>
+        <div>
+            <input class="fi-input" id="txtEmail" type="email" placeholder="Your email" />
+        </div>
+        <div class="url-fallback">
+            No website yet?
+            <a onclick="showFallback()">Tell us your industry instead</a>
+        </div>
+    </div>-->
+    <div id="url-form" class="url-form">
+        <div class="fi-label">Your URL</div>
+        <input class="fi-input"
+               id="urlInput"
+               type="text"
+               placeholder="yourwebsite.com or facebook.com/yourbusiness"
+               autocomplete="off"
+               spellcheck="false"
+               onkeydown="if(event.key==='Enter') startFromURL(event)" />
+        <div class="fi-label">Your phone number</div>
+        <input class="fi-input" id="txtPhone" type="tel" placeholder="Your phone number" pattern="[0-9+\s\-\(\)]{7,20}" />
+        <div class="fi-label">Your email</div>
+        <input class="fi-input" id="txtEmail" type="email" placeholder="Your email" />
+        <button class="url-btn"
+                id="urlBtn"
+                onclick="startFromURL(event)">
+            Show Me →
+        </button>
+        <div class="url-fallback">
+            No website yet?
+            <a onclick="showFallback()">Tell us your industry instead</a>
+        </div>
+    </div>
 
-	  <div class="url-fallback">
-		No website yet? 
-		<a onclick="showFallback()">Tell us your industry instead</a>
-	  </div>
-	</div>
     <div id="industry-fallback">
-      <div class="fi-label">Business name (optional)</div>
-      <input class="fi-input" id="bizName" type="text" placeholder="e.g. Apex Roofing, Smith Dental…"/>
-      <div class="fi-label">Your industry</div>
-      <select class="fi-select" id="industrySelect">
-        <option value="">Select your industry…</option>
-        <option value="roofing">Roofing</option>
-        <option value="hvac">HVAC</option>
-        <option value="plumbing">Plumbing</option>
-        <option value="law firm">Law Firm</option>
-        <option value="dental">Dental / Medical</option>
-        <option value="real estate">Real Estate</option>
-        <option value="ecommerce">E-Commerce</option>
-        <option value="restaurant">Restaurant</option>
-        <option value="fitness">Fitness / Gym</option>
-        <option value="marketing agency">Marketing Agency</option>
-        <option value="home services">Home Services</option>
-        <option value="other">Other</option>
-      </select>
-      <button class="fi-btn" onclick="startFromIndustry()">Start Demo →</button>
+        <div class="fi-label">Business name (optional)</div>
+        <input class="fi-input" id="bizName" type="text" placeholder="e.g. Apex Roofing, Smith Dental…" />
+        <div class="fi-label">Your industry</div>
+        <select class="fi-select" id="industrySelect">
+            <option value="">Select your industry…</option>
+            <option value="roofing">Roofing</option>
+            <option value="hvac">HVAC</option>
+            <option value="plumbing">Plumbing</option>
+            <option value="law firm">Law Firm</option>
+            <option value="dental">Dental / Medical</option>
+            <option value="real estate">Real Estate</option>
+            <option value="ecommerce">E-Commerce</option>
+            <option value="restaurant">Restaurant</option>
+            <option value="fitness">Fitness / Gym</option>
+            <option value="marketing agency">Marketing Agency</option>
+            <option value="home services">Home Services</option>
+            <option value="other">Other</option>
+        </select>
+        <div class="fi-label">Your phone number</div>
+        <input class="fi-input" id="txtPhone2" type="tel" placeholder="Your phone number" />
+        <div class="fi-label">Your email</div>
+        <input class="fi-input" id="txtEmail2" type="email" placeholder="Your email" />
+
+        <button class="fi-btn" onclick="startFromIndustry()">Start Demo →</button>
+        <div class="url-fallback">
+            You have your business website or Facebook page?
+            <a onclick="showURL()">Tell us</a>
+        </div>
     </div>
 
     <div class="trust-row">
@@ -535,8 +568,8 @@
 
 <script>
 // ── STATE ──
-let biz = { name:'', industry:'', description:'', tone:'' };
-let wBiz = { name:'', industry:'', description:'', tone:'' };
+let biz = { name:'', url: '', phone: '', email: '', industry:'', description:'', tone:'' };
+let wBiz = { name: '', url: '', phone: '', email: '', industry:'', description:'', tone:'' };
 let history = [];
 let wHistory = [];
 let ctaShown = false;
@@ -544,22 +577,45 @@ let wReady = false;
 
 // ── ENTRY ──
 function showFallback() {
-  document.getElementById('industry-fallback').style.display = 'flex';
+    document.getElementById('industry-fallback').style.display = 'flex';
+    document.getElementById('url-form').style.display = 'none';
+}
+function showURL() {
+    document.getElementById('industry-fallback').style.display = 'none';
+    document.getElementById('url-form').style.display = 'flex';
 }
 
-function startFromURL() {
-  let raw = document.getElementById('urlInput').value.trim();
-  if (!raw) { document.getElementById('urlInput').focus(); return; }
-  if (!raw.startsWith('http')) raw = 'https://' + raw;
-  biz.url = raw;
-  goAnalyzing(raw, false);
+function startFromURL2() {
+    let raw = document.getElementById('urlInput').value.trim();
+    const phone = document.getElementById('txtPhone').value.trim();
+    const email = document.getElementById('txtEmail').value.trim();
+
+    if (!raw) { document.getElementById('urlInput').focus(); return; }
+    if (!raw.startsWith('http')) raw = 'https://' + raw;
+    //biz.url = raw;
+    biz = { name: raw, url: raw, phone: phone, email: email, tone: 'friendly' };
+    goAnalyzing(raw, false);
 }
 
 function startFromIndustry() {
   const ind = document.getElementById('industrySelect').value;
-  const name = document.getElementById('bizName').value.trim();
+    const name = document.getElementById('bizName').value.trim();
+    const phone = document.getElementById('txtPhone2').value.trim();
+    const email = document.getElementById('txtEmail2').value.trim();
+    
+    const phoneRegex = /^[0-9+\s\-\(\)]{7,20}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && !emailRegex.test(email)) {
+        alert("email invalid format");
+        return;
+    }
+    if (phone && !phoneRegex.test(phone)) {
+        alert("phone invalid format");
+        return;
+    }
+
   if (!ind) { document.getElementById('industrySelect').focus(); return; }
-  biz = { name: name || (ind.charAt(0).toUpperCase()+ind.slice(1)+' Business'), industry: ind, description: 'A ' + ind + ' business', tone: 'friendly' };
+  biz = { name: name || (ind.charAt(0).toUpperCase()+ind.slice(1)+' Business'), phone: phone, email: email, industry: ind, description: 'A ' + ind + ' business', tone: 'friendly' };
   goAnalyzing('', false);
 }
 
@@ -912,15 +968,45 @@ function esc(s) {
 }
 </script>
 <script>
+function validateEmail(email) {
+    return String(email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+}
+
+function validateURL(url) {
+    try {
+        new URL(url.startsWith('http') ? url : 'https://' + url);
+        return true;
+    } catch (_) {
+        return false;
+    }
+}
 async function startFromURL(event) {
     if (event) event.preventDefault();
 
     const input = document.getElementById("urlInput");
     const button = document.getElementById("urlBtn");
+    const phone = document.getElementById('txtPhone').value.trim();
+    const email = document.getElementById('txtEmail').value.trim();
+
     const websiteUrl = input.value.trim();
 
     if (!websiteUrl) {
         alert("Please enter your website URL");
+        return;
+    }
+    if (!validateURL(websiteUrl)) {
+        alert("url invalid format");
+        return;
+    }
+
+    const phoneRegex = /^[0-9+\s\-\(\)]{7,20}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && !emailRegex.test(email)) {
+        alert("email invalid format");
+        return;
+    }
+    if (phone && !phoneRegex.test(phone)) {
+        alert("phone invalid format");
         return;
     }
 
@@ -947,7 +1033,8 @@ async function startFromURL(event) {
 
         console.log("n8n response:", result);
 
-        alert("Your request has been sent.  We will contact you soon.");
+        //alert("Your request has been sent.  We will contact you soon.");
+        startFromURL2();
 
         // nếu muốn redirect sau khi gọi thành công
         // window.location.href = "/result.html";
