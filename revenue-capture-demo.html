@@ -594,7 +594,8 @@ function startFromURL2() {
     if (!raw.startsWith('http')) raw = 'https://' + raw;
     //biz.url = raw;
     biz = { name: raw, url: raw, phone: phone, email: email, tone: 'friendly' };
-    goAnalyzing(raw, false);
+    //goAnalyzing(raw, false);
+    fetchBizInfo(raw, false);
 }
 
 function startFromIndustry() {
@@ -629,45 +630,50 @@ function goAnalyzing(url, isWidget) {
   if (url) {
     fetchBizInfo(url, isWidget);
   } else {
-    setTimeout(() => { finishSteps(); setTimeout(() => isWidget ? launchWidget() : launchChat(), 500); }, 2600);
+    setTimeout(() => { finishSteps(); setTimeout(() => isWidget ? launchWidget() : launchChat(), 500); }, 3000);
   }
 }
 
 // ── BIZ ANALYSIS VIA CLAUDE ──
 async function fetchBizInfo(url, isWidget) {
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 600,
-        system: `You are a business analyst. Given a URL, identify the business. Use your knowledge of domain names, common businesses, and any context available.
+    try {
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                model: 'claude-sonnet-4-20250514',
+                max_tokens: 600,
+                system: `You are a business analyst. Given a URL, identify the business. Use your knowledge of domain names, common businesses, and any context available.
 Respond ONLY with valid compact JSON (no markdown, no explanation):
 {"name":"Business Name","industry":"industry type","description":"one sentence what they do","tone":"professional|casual|friendly"}
 If uncertain, make your best guess from the domain name.`,
-        messages: [{ role:'user', content:`URL: ${url}` }]
-      })
-    });
-    const data = await res.json();
-    const text = (data.content||[]).map(b=>b.text||'').join('');
-    let info = {};
-    try { info = JSON.parse(text.replace(/```json|```/g,'').trim()); } catch(e) {}
-    const domain = url.replace(/https?:\/\/(www\.)?/,'').split('/')[0].split('.')[0];
-    const merged = {
-      name: info.name || (domain.charAt(0).toUpperCase()+domain.slice(1)),
-      industry: info.industry || 'business',
-      description: info.description || 'A local business',
-      tone: info.tone || 'professional'
-    };
-    if (isWidget) wBiz = merged; else biz = merged;
-  } catch(e) {
-    const domain = url.replace(/https?:\/\/(www\.)?/,'').split('/')[0];
-    const fallback = { name: domain||'Your Business', industry:'business', description:'A local business', tone:'professional' };
-    if (isWidget) wBiz = fallback; else biz = fallback;
-  }
-  finishSteps();
-  setTimeout(() => isWidget ? launchWidget() : launchChat(), 500);
+                messages: [{ role: 'user', content: `URL: ${url}` }]
+            })
+        });
+        const data = await res.json();
+        const text = (data.content || []).map(b => b.text || '').join('');
+        let info = {};
+        try { info = JSON.parse(text.replace(/```json|```/g, '').trim()); } catch (e) { }
+        const domain = url.replace(/https?:\/\/(www\.)?/, '').split('/')[0].split('.')[0];
+        const merged = {
+            name: info.name || (domain.charAt(0).toUpperCase() + domain.slice(1)),
+            industry: info.industry || 'business',
+            description: info.description || 'A local business',
+            tone: info.tone || 'professional'
+        };
+        if (isWidget) wBiz = merged; else biz = merged;
+    } catch (e) {
+        const domain = url.replace(/https?:\/\/(www\.)?/, '').split('/')[0];
+        const fallback = { name: domain || 'Your Business', industry: 'business', description: 'A local business', tone: 'professional' };
+        if (isWidget) wBiz = fallback; else biz = fallback;
+    }
+
+    setTimeout(() => {
+        finishSteps();
+        setTimeout(() => isWidget ? launchWidget() : launchChat(), 600);
+    }, 2000);
+    //finishSteps();
+    //setTimeout(() => isWidget ? launchWidget() : launchChat(), 500);
 }
 
 // ── STEP ANIMATION ──
@@ -1013,6 +1019,11 @@ async function startFromURL(event) {
     // loading state
     button.disabled = true;
     button.innerText = "Loading...";
+
+    // ----------
+    const rawUrl = websiteUrl.startsWith('http') ? websiteUrl : 'https://' + websiteUrl;
+    goAnalyzing(rawUrl, false);
+    // ----------
 
     try {
         const response = await fetch("https://n8n.securegreen.co/webhook/GetWebInfo", {
