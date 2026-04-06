@@ -1021,7 +1021,9 @@ async function startFromURL(event) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                website_url: websiteUrl
+                website_url: websiteUrl,
+                user_phone: phone,
+                user_email: email
             })
         });
 
