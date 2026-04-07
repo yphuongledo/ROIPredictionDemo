@@ -1065,8 +1065,8 @@ async function startFromURL(event) {
 async function startFromIndustry(event) {
   if (event) event.preventDefault();
 
+  const industry = document.getElementById('industrySelect').value;
   const bizName = document.getElementById('bizName').value.trim();
-  const industry = document.getElementById("industrySelect");
   const button = document.getElementById("urlBtn1");
   const phone = document.getElementById('txtPhone2').value.trim();
   const email = document.getElementById('txtEmail2').value.trim();
