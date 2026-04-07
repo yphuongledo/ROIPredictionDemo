@@ -1110,7 +1110,7 @@ async function startFromIndustry(event) {
 
       //alert("Your request has been sent.  We will contact you soon.");
       biz = { bizName: name || (industry.charAt(0).toUpperCase()+industry.slice(1)+' Business'), phone: phone, email: email, industry: industry, description: 'A ' + industry + ' business', tone: 'friendly' };
-      //startFromURL2();
+      goAnalyzing('', false);
 
       // nếu muốn redirect sau khi gọi thành công
       // window.location.href = "/result.html";
