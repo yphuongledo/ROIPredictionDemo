@@ -1065,7 +1065,7 @@ async function startFromURL(event) {
 async function startFromIndustry(event) {
   if (event) event.preventDefault();
 
-  const bizName = document.getElementById("bizName");
+  const bizName = document.getElementById('bizName').value.trim();
   const industry = document.getElementById("industrySelect");
   const button = document.getElementById("urlBtn1");
   const phone = document.getElementById('txtPhone2').value.trim();
@@ -1109,7 +1109,7 @@ async function startFromIndustry(event) {
       console.log("n8n response:", result);
 
       //alert("Your request has been sent.  We will contact you soon.");
-      biz = { name: rawUrl, url: rawUrl, phone: phone, email: email, tone: 'friendly' };
+      biz = { bizName: name || (industry.charAt(0).toUpperCase()+industry.slice(1)+' Business'), phone: phone, email: email, industry: industry, description: 'A ' + industry + ' business', tone: 'friendly' };
       //startFromURL2();
 
       // nếu muốn redirect sau khi gọi thành công
