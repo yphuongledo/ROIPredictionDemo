@@ -1294,7 +1294,7 @@ async function startFromURL(event) {
 
     // ----------
     const rawUrl = websiteUrl.startsWith('http') ? websiteUrl : 'https://' + websiteUrl;
-    goAnalyzing(rawUrl, false);
+    fetchBiz(rawUrl, false);
     // ----------
 
     try {
@@ -1381,7 +1381,7 @@ async function startFromIndustry(event) {
 
       //alert("Your request has been sent.  We will contact you soon.");
       biz = { name: name || (industry.charAt(0).toUpperCase()+industry.slice(1)+' Business'), phone: phone, email: email, industry: industry, description: 'A ' + industry + ' business', tone: 'friendly' };
-      goAnalyzing('', false);
+      fetchBiz('', false);
 
       // nếu muốn redirect sau khi gọi thành công
       // window.location.href = "/result.html";
