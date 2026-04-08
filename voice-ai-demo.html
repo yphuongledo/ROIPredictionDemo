@@ -750,7 +750,7 @@ function showURL() {
     document.getElementById('url-form').style.display = 'flex';
 }
 
-function startFromURL() {
+function startFromURL2() {
     let raw = document.getElementById('urlInput').value.trim();
     const phone = document.getElementById('txtPhone').value.trim();
     const email = document.getElementById('txtEmail').value.trim();
@@ -767,7 +767,7 @@ function startFromURL() {
     setTimeout(() => { finishSteps(); setTimeout(() => fetchBiz(raw, false), 500); }, 3000);
 }
 
-function startFromIndustry() {
+function startFromIndustry2() {
     const ind = document.getElementById('industrySelect').value;
     const name = document.getElementById('bizName').value.trim();
     const phone = document.getElementById('txtPhone2').value.trim();
@@ -1307,7 +1307,10 @@ async function startFromURL(event) {
 
     // ----------
     const rawUrl = websiteUrl.startsWith('http') ? websiteUrl : 'https://' + websiteUrl;
-    fetchBiz(rawUrl, false);
+    document.getElementById('aUrl').textContent = rawUrl;
+    showScreen('analyzing-screen');
+    runSteps();
+    setTimeout(() => { finishSteps(); setTimeout(() => fetchBiz(rawUrl, false), 500); }, 3000);
     // ----------
 
     try {
@@ -1394,7 +1397,10 @@ async function startFromIndustry(event) {
 
       //alert("Your request has been sent.  We will contact you soon.");
       biz = { name: name || (industry.charAt(0).toUpperCase()+industry.slice(1)+' Business'), phone: phone, email: email, industry: industry, description: 'A ' + industry + ' business', tone: 'friendly' };
-      fetchBiz('', false);
+      //fetchBiz('', false);
+      showScreen('analyzing-screen');
+      runSteps();
+      setTimeout(() => { finishSteps(); setTimeout(() => fetchBiz('', false), 500); }, 3000);
 
       // nếu muốn redirect sau khi gọi thành công
       // window.location.href = "/result.html";
