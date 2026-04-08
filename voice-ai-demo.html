@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Revenue Capture AI — Voice Demo | ROI Predictions Automation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #040404;
+      --card: #101010;
+      --card2: #151515;
+      --text: #f5f5f5;
+      --muted: #777;
+      --line: #1e1e1e;
+      --red: #e63b3b;
+      --red2: #ff6f6f;
+      --green: #4ade80;
+      --blue: #3b82f6;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg); color: var(--text); min-height: 100vh;
+      user-select: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 60% 28% at 50% 0%, rgba(230,59,59,0.13), transparent 55%),
+        var(--bg);
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      backdrop-filter: blur(14px);
+      background: rgba(4,4,4,0.82);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 17px; color: #fff; }
+    .logo span { color: var(--red2); }
+    .badge {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 5px 14px; border-radius: 999px;
+      background: rgba(230,59,59,0.1); border: 1px solid rgba(230,59,59,0.22);
+      color: var(--red2);
+    }
+
+    /* ── SCREENS ── */
+    .screen { display: none; }
+    .screen.active { display: flex; }
+
+    /* ── ENTRY ── */
+    #entry-screen {
+      flex-direction: column; align-items: center; justify-content: center;
+      min-height: calc(100vh - 65px); padding: 48px 20px; text-align: center;
+    }
+    .eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--red2); margin-bottom: 16px;
+    }
+    .hero-h {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 5vw, 52px); font-weight: 700;
+      line-height: 1.08; letter-spacing: -0.03em;
+      max-width: 620px; margin: 0 auto 16px;
+    }
+    .hero-h em { color: var(--red2); font-style: normal; }
+    .hero-sub {
+      font-size: 15px; color: var(--muted); max-width: 440px;
+      margin: 0 auto 44px; line-height: 1.65;
+    }
+    .url-wrap { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 11px; }
+    .url-row {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 14px; padding: 6px 6px 6px 18px; transition: border-color 0.2s;
+    }
+    .url-row:focus-within { border-color: rgba(230,59,59,0.45); }
+    .url-in {
+      flex: 1; background: transparent; border: none; outline: none;
+      color: var(--text); font-size: 15px; font-family: 'Inter', sans-serif; padding: 10px 0;
+    }
+    .url-in::placeholder { color: #383838; }
+    .url-btn {
+      background: linear-gradient(135deg, var(--red), #b31223);
+      color: #fff; border: none; border-radius: 10px;
+      padding: 13px 22px; font-size: 14px; font-weight: 600;
+      cursor: pointer; white-space: nowrap; font-family: 'Inter', sans-serif;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .url-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .url-fallback { font-size: 12px; color: #3a3a3a; }
+    .url-fallback a { color: var(--muted); text-decoration: underline; cursor: pointer; }
+    #ind-fallback { display: none; flex-direction: column; gap: 9px; width: 100%; max-width: 520px; }
+    .fi-in, .fi-sel {
+      background: var(--card); border: 1px solid var(--line);
+      color: var(--text); font-size: 14px; font-family: 'Inter', sans-serif;
+      padding: 12px 15px; border-radius: 11px; outline: none; width: 100%;
+    }
+    .fi-in::placeholder { color: #383838; }
+    .fi-in:focus, .fi-sel:focus { border-color: rgba(230,59,59,0.4); }
+    .fi-btn {
+      background: linear-gradient(135deg, var(--red), #b31223);
+      color: #fff; border: none; border-radius: 10px;
+      padding: 13px; font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity 0.2s;
+    }
+    .fi-btn:hover { opacity: 0.9; }
+    .trust-row {
+      display: flex; align-items: center; gap: 22px;
+      margin-top: 48px; flex-wrap: wrap; justify-content: center;
+    }
+    .trust-item { font-size: 12px; color: #3a3a3a; display: flex; align-items: center; gap: 6px; }
+    .tdot { width: 5px; height: 5px; border-radius: 50%; background: var(--red); }
+
+    /* ── ANALYZING ── */
+    #analyzing-screen {
+      flex-direction: column; align-items: center; justify-content: center;
+      min-height: calc(100vh - 65px); padding: 48px 20px; text-align: center;
+    }
+    .spin {
+      width: 60px; height: 60px; border: 2px solid var(--line);
+      border-top-color: var(--red); border-radius: 50%;
+      animation: spin 0.85s linear infinite; margin-bottom: 26px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .a-h { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+    .a-steps { display: flex; flex-direction: column; gap: 8px; margin-top: 22px; max-width: 300px; }
+    .a-step {
+      display: flex; align-items: center; gap: 11px; font-size: 13px; color: var(--muted);
+      padding: 9px 14px; border-radius: 9px; background: var(--card); border: 1px solid var(--line);
+      transition: all 0.3s;
+    }
+    .a-step.active { color: var(--text); border-color: rgba(230,59,59,0.4); background: rgba(230,59,59,0.05); }
+    .a-step.done { color: var(--green); border-color: rgba(74,222,128,0.15); }
+
+    /* ── CALL SCREEN ── */
+    #call-screen {
+      flex-direction: row; height: calc(100vh - 65px); overflow: hidden;
+    }
+
+    /* Agent panel */
+    .agent-panel {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 32px; gap: 28px;
+      border-right: 1px solid var(--line);
+    }
+
+    /* Orb */
+    .orb-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+    .orb {
+      width: 140px; height: 140px; border-radius: 50%;
+      background: linear-gradient(135deg, #200808, #0d0d0d);
+      border: 1px solid rgba(230,59,59,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 52px; position: relative; z-index: 1;
+      transition: box-shadow 0.3s, border-color 0.3s;
+    }
+    .orb.speaking {
+      border-color: rgba(230,59,59,0.5);
+      box-shadow: 0 0 0 14px rgba(230,59,59,0.07), 0 0 0 28px rgba(230,59,59,0.03);
+      animation: orbPulse 1.6s ease-in-out infinite;
+    }
+    .orb.listening-active {
+      border-color: rgba(59,130,246,0.6);
+      box-shadow: 0 0 0 14px rgba(59,130,246,0.08), 0 0 0 28px rgba(59,130,246,0.03);
+    }
+    @keyframes orbPulse {
+      0%,100% { box-shadow: 0 0 0 14px rgba(230,59,59,0.07), 0 0 0 28px rgba(230,59,59,0.03); }
+      50% { box-shadow: 0 0 0 20px rgba(230,59,59,0.1), 0 0 0 40px rgba(230,59,59,0.04); }
+    }
+    .ring {
+      position: absolute; border-radius: 50%;
+      border: 1px solid rgba(230,59,59,0.12);
+      opacity: 0; pointer-events: none;
+      animation: none;
+    }
+    .orb.speaking ~ .ring { animation: ringOut 2s ease-out infinite; }
+    .orb.speaking ~ .ring:nth-child(2) { animation-delay: 0.5s; width: 190px; height: 190px; }
+    .orb.speaking ~ .ring:nth-child(3) { animation-delay: 1s; width: 230px; height: 230px; }
+    .ring:first-of-type { width: 165px; height: 165px; }
+    @keyframes ringOut {
+      0% { opacity: 0.5; transform: scale(0.9); }
+      100% { opacity: 0; transform: scale(1.15); }
+    }
+
+    .agent-info { text-align: center; }
+    .agent-name { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; }
+    .agent-role { font-size: 13px; color: var(--muted); margin-top: 4px; }
+    .agent-biz { font-size: 13px; color: var(--red2); margin-top: 3px; font-weight: 500; }
+
+    /* Status */
+    .status-pill {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 20px; border-radius: 999px;
+      background: var(--card); border: 1px solid var(--line);
+      font-size: 12px; font-weight: 500; min-width: 180px; justify-content: center;
+      transition: all 0.3s;
+    }
+    .sdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; transition: background 0.3s; }
+    .sdot.idle { background: #444; }
+    .sdot.speaking { background: var(--green); animation: blink 1.2s infinite; }
+    .sdot.thinking { background: #f3c56b; animation: blink 0.7s infinite; }
+    .sdot.recording { background: var(--blue); animation: blink 0.5s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+    /* Controls */
+    .controls { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+
+    /* Push-to-talk button */
+    .ptt-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .ptt-btn {
+      width: 90px; height: 90px; border-radius: 50%; border: none;
+      background: linear-gradient(135deg, #1a1a2e, #111);
+      border: 2px solid var(--line);
+      color: #fff; font-size: 32px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s; outline: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: none;
+    }
+    .ptt-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .ptt-btn.active {
+      background: linear-gradient(135deg, #1a3a6b, #0d1f3c);
+      border-color: var(--blue);
+      box-shadow: 0 0 0 10px rgba(59,130,246,0.12), 0 0 0 20px rgba(59,130,246,0.05);
+      transform: scale(1.06);
+    }
+    .ptt-hint {
+      font-size: 12px; color: var(--muted); text-align: center; line-height: 1.4;
+    }
+    .ptt-hint strong { color: var(--text); }
+
+    /* End call button */
+    .end-btn {
+      width: 52px; height: 52px; border-radius: 50%; border: none;
+      background: linear-gradient(135deg, var(--red), #b31223);
+      color: #fff; font-size: 20px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 20px rgba(230,59,59,0.3);
+      transition: transform 0.15s, opacity 0.2s;
+    }
+    .end-btn:hover { transform: scale(1.07); }
+
+    /* Start call button */
+    .start-btn {
+      width: 72px; height: 72px; border-radius: 50%; border: none;
+      background: linear-gradient(135deg, #22c55e, #15803d);
+      color: #fff; font-size: 26px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 28px rgba(34,197,94,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .start-btn:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(34,197,94,0.45); }
+
+    .call-hint { font-size: 12px; color: var(--muted); text-align: center; }
+
+    /* ── TRANSCRIPT PANEL ── */
+    .transcript-panel {
+      width: 380px; flex-shrink: 0;
+      display: flex; flex-direction: column;
+      border-left: 1px solid var(--line);
+    }
+    .t-head {
+      padding: 16px 20px; border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+    }
+    .t-head-lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
+    .t-live { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--green); }
+    .t-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: blink 2s infinite; }
+
+    .t-body {
+      flex: 1; overflow-y: auto; padding: 18px;
+      display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth;
+    }
+    .t-body::-webkit-scrollbar { width: 3px; }
+    .t-body::-webkit-scrollbar-thumb { background: var(--line); }
+
+    .t-empty {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 10px; color: var(--muted); font-size: 13px;
+      text-align: center; padding: 30px; opacity: 0.6;
+    }
+
+    .t-msg { display: flex; flex-direction: column; gap: 3px; animation: msgIn 0.22s ease; }
+    @keyframes msgIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:none} }
+    .t-speaker { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .t-msg.agent .t-speaker { color: var(--red2); }
+    .t-msg.user .t-speaker { color: #60a5fa; }
+    .t-text {
+      font-size: 13px; line-height: 1.6; color: var(--text);
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 10px; padding: 9px 12px;
+    }
+    .t-msg.agent .t-text { border-color: rgba(230,59,59,0.12); }
+    .t-msg.user .t-text { border-color: rgba(96,165,250,0.12); }
+
+    /* Recording indicator in transcript */
+    .t-recording {
+      font-size: 12px; color: #60a5fa; font-style: italic;
+      padding: 4px 0; display: flex; align-items: center; gap: 6px;
+      animation: msgIn 0.15s ease;
+    }
+    .rec-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); animation: blink 0.5s infinite; flex-shrink: 0; }
+
+    .t-cta {
+      margin-top: 4px; padding: 13px 15px;
+      background: rgba(230,59,59,0.07); border: 1px solid rgba(230,59,59,0.2);
+      border-radius: 11px; animation: msgIn 0.3s ease;
+    }
+    .t-cta p { font-size: 12px; color: var(--text); line-height: 1.45; margin-bottom: 10px; }
+    .t-cta strong { color: var(--red2); }
+    .t-cta-btn {
+      width: 100%; background: linear-gradient(135deg, var(--red), #b31223);
+      color: #fff; border: none; border-radius: 8px;
+      padding: 10px; font-size: 12px; font-weight: 600;
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity 0.2s;
+    }
+    .t-cta-btn:hover { opacity: 0.88; }
+
+    /* ── WIDGET ── */
+    #w-wrap {
+      position: fixed; bottom: 24px; right: 24px;
+      z-index: 9999; font-family: 'Inter', sans-serif;
+    }
+    #w-toggle {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--red), #b31223);
+      border: none; cursor: pointer; color: #fff; font-size: 22px;
+      box-shadow: 0 8px 30px rgba(230,59,59,0.45);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s;
+    }
+    #w-toggle:hover { transform: scale(1.08); }
+    #w-panel {
+      position: absolute; bottom: 66px; right: 0; width: 320px;
+      background: var(--bg); border: 1px solid var(--line);
+      border-radius: 18px; box-shadow: 0 24px 80px rgba(0,0,0,0.8);
+      display: none; flex-direction: column; overflow: hidden;
+      animation: wOpen 0.22s ease;
+    }
+    @keyframes wOpen { from{opacity:0;transform:scale(0.92) translateY(10px)} to{opacity:1;transform:none} }
+    #w-panel.open { display: flex; }
+
+    .w-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 15px;
+      background: linear-gradient(135deg, #160303, #0d0d0d);
+      border-bottom: 1px solid var(--line);
+    }
+    .w-agent-row { display: flex; align-items: center; gap: 9px; }
+    .w-av {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--red), #7a0f0f);
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+    }
+    .w-aname { font-weight: 600; font-size: 13px; }
+    .w-astatus { font-size: 11px; color: var(--green); display: flex; align-items: center; gap: 4px; }
+    .w-close { background: none; border: none; color: var(--muted); font-size: 18px; cursor: pointer; padding: 2px 6px; }
+    .w-close:hover { color: var(--text); }
+
+    #w-entry { padding: 18px 16px; display: flex; flex-direction: column; gap: 9px; }
+    #w-entry p { font-size: 13px; color: var(--text); line-height: 1.5; }
+    .w-url-in {
+      background: var(--card); border: 1px solid var(--line);
+      color: var(--text); font-size: 13px; font-family: 'Inter', sans-serif;
+      padding: 10px 13px; border-radius: 10px; outline: none; width: 100%;
+    }
+    .w-url-in::placeholder { color: #383838; }
+    .w-url-in:focus { border-color: rgba(230,59,59,0.4); }
+    .w-start {
+      background: linear-gradient(135deg, var(--red), #b31223);
+      color: #fff; border: none; border-radius: 10px;
+      padding: 11px; font-size: 13px; font-weight: 600;
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: opacity 0.2s;
+    }
+    .w-start:hover { opacity: 0.88; }
+    .w-hint { font-size: 11px; color: #2e2e2e; text-align: center; }
+
+    #w-analyzing { display: none; padding: 30px 16px; text-align: center; }
+
+    #w-call { display: none; flex-direction: column; align-items: center; padding: 20px 16px; gap: 14px; }
+    .w-orb {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, #200808, #111);
+      border: 1px solid rgba(230,59,59,0.2);
+      display: flex; align-items: center; justify-content: center; font-size: 28px;
+      transition: box-shadow 0.3s, border-color 0.3s;
+    }
+    .w-orb.speaking { border-color: rgba(230,59,59,0.5); animation: orbPulse 1.6s ease-in-out infinite; }
+    .w-orb.listening-active { border-color: rgba(59,130,246,0.6); }
+    .w-info { text-align: center; }
+    .w-name { font-weight: 600; font-size: 14px; }
+    .w-biz { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .w-status-pill {
+      display: flex; align-items: center; gap: 6px; padding: 7px 16px;
+      border-radius: 999px; background: var(--card); border: 1px solid var(--line);
+      font-size: 12px;
+    }
+    .w-transcript {
+      width: 100%; max-height: 110px; overflow-y: auto;
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 10px; padding: 10px 12px;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .wt-line { font-size: 12px; line-height: 1.4; }
+    .wt-line.agent { color: var(--red2); }
+    .wt-line.user { color: #93c5fd; }
+
+    /* Widget PTT */
+    .w-ptt {
+      width: 64px; height: 64px; border-radius: 50%; border: 2px solid var(--line);
+      background: linear-gradient(135deg, #1a1a2e, #111);
+      color: #fff; font-size: 24px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s; outline: none; -webkit-tap-highlight-color: transparent; touch-action: none;
+    }
+    .w-ptt:disabled { opacity: 0.35; cursor: not-allowed; }
+    .w-ptt.active {
+      background: linear-gradient(135deg, #1a3a6b, #0d1f3c);
+      border-color: var(--blue);
+      box-shadow: 0 0 0 8px rgba(59,130,246,0.12);
+      transform: scale(1.06);
+    }
+    .w-ptt-hint { font-size: 11px; color: var(--muted); text-align: center; }
+
+    .w-end {
+      width: 40px; height: 40px; border-radius: 50%; border: none;
+      background: linear-gradient(135deg, var(--red), #b31223);
+      color: #fff; font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 14px rgba(230,59,59,0.3); transition: transform 0.15s;
+    }
+    .w-end:hover { transform: scale(1.07); }
+
+    .w-cta { width: 100%; padding: 11px 14px; background: rgba(230,59,59,0.07); border: 1px solid rgba(230,59,59,0.2); border-radius: 10px; text-align: center; }
+    .w-cta p { font-size: 11px; color: var(--text); line-height: 1.4; margin-bottom: 8px; }
+    .w-cta strong { color: var(--red2); }
+    .w-cta-btn { background: linear-gradient(135deg, var(--red), #b31223); color: #fff; border: none; border-radius: 7px; padding: 8px 16px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; }
+
+    @media (max-width: 700px) {
+      #call-screen { flex-direction: column; height: auto; min-height: calc(100vh - 65px); }
+      .agent-panel { border-right: none; border-bottom: 1px solid var(--line); padding: 28px 16px; }
+      .transcript-panel { width: 100%; height: 300px; }
+      .topbar { padding: 15px 18px; }
+      #w-panel { width: calc(100vw - 32px); right: -10px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <div class="logo">ROI <span>Predictions</span> Automation</div>
+    <div class="badge">Voice Demo</div>
+  </header>
+
+  <!-- ══ ENTRY ══ -->
+  <div id="entry-screen" class="screen active">
+    <p class="eyebrow">Revenue Capture AI — Voice Demo</p>
+    <h1 class="hero-h">Hear your AI agent <em>answer the phone</em></h1>
+    <p class="hero-sub">Enter your website and experience how your customers would be greeted — live, by voice, 24/7.</p>
+
+    <div class="url-wrap">
+      <div class="url-row">
+        <span style="color:var(--muted);font-size:15px;flex-shrink:0">🌐</span>
+        <input class="url-in" id="urlIn" type="text"
+          placeholder="yourwebsite.com or facebook.com/yourbusiness"
+          autocomplete="off" spellcheck="false"
+          onkeydown="if(event.key==='Enter') startFromURL()"/>
+        <button class="url-btn" onclick="startFromURL()">Start Voice Demo →</button>
+      </div>
+      <div class="url-fallback">No website? <a onclick="showFallback()">Choose your industry instead</a></div>
+    </div>
+
+    <div id="ind-fallback">
+      <input class="fi-in" id="bizN" type="text" placeholder="Business name (optional)"/>
+      <select class="fi-sel" id="indSel">
+        <option value="">Select your industry…</option>
+        <option value="roofing">Roofing</option>
+        <option value="hvac">HVAC</option>
+        <option value="plumbing">Plumbing</option>
+        <option value="law firm">Law Firm</option>
+        <option value="dental">Dental / Medical</option>
+        <option value="real estate">Real Estate</option>
+        <option value="ecommerce">E-Commerce</option>
+        <option value="restaurant">Restaurant</option>
+        <option value="fitness">Fitness / Gym</option>
+        <option value="home services">Home Services</option>
+        <option value="other">Other</option>
+      </select>
+      <button class="fi-btn" onclick="startFromIndustry()">Start Voice Demo →</button>
+    </div>
+
+    <div class="trust-row">
+      <div class="trust-item"><div class="tdot"></div>No signup needed</div>
+      <div class="trust-item"><div class="tdot"></div>Works in any browser</div>
+      <div class="trust-item"><div class="tdot"></div>Personalized to your business</div>
+    </div>
+  </div>
+
+  <!-- ══ ANALYZING ══ -->
+  <div id="analyzing-screen" class="screen">
+    <div class="spin"></div>
+    <div class="a-h">Preparing your voice agent…</div>
+    <p style="color:var(--muted);font-size:13px;margin-top:5px" id="aUrl"></p>
+    <div class="a-steps">
+      <div class="a-step" id="s1">🔍 Reading your website</div>
+      <div class="a-step" id="s2">🏢 Identifying your business</div>
+      <div class="a-step" id="s3">🎙️ Configuring voice agent</div>
+      <div class="a-step" id="s4">✨ Personalizing the script</div>
+    </div>
+  </div>
+
+  <!-- ══ CALL SCREEN ══ -->
+  <div id="call-screen" class="screen">
+
+    <!-- Agent side -->
+    <div class="agent-panel">
+      <div class="orb-wrap">
+        <div class="orb" id="orb">🤖</div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+      </div>
+
+      <div class="agent-info">
+        <div class="agent-name" id="agentName">AI Assistant</div>
+        <div class="agent-role">Revenue Capture AI</div>
+        <div class="agent-biz" id="agentBiz"></div>
+      </div>
+
+      <div class="status-pill">
+        <div class="sdot idle" id="sdot"></div>
+        <span id="stext">Press call to start</span>
+      </div>
+
+      <div class="controls" id="controls-pre">
+        <button class="start-btn" onclick="startCall()">📞</button>
+        <div class="call-hint">Tap to connect</div>
+      </div>
+
+      <div class="controls" id="controls-live" style="display:none">
+        <!-- Push to talk -->
+        <div class="ptt-wrap">
+          <button class="ptt-btn" id="pttBtn" disabled
+            onmousedown="startRecording()" onmouseup="stopRecording()"
+            ontouchstart="startRecording(event)" ontouchend="stopRecording(event)">
+            🎙️
+          </button>
+          <div class="ptt-hint">
+            <strong>Hold to speak</strong><br>
+            Release when done
+          </div>
+        </div>
+        <button class="end-btn" onclick="endCall()">📵</button>
+      </div>
+    </div>
+
+    <!-- Transcript -->
+    <div class="transcript-panel">
+      <div class="t-head">
+        <span class="t-head-lbl">Live Transcript</span>
+        <div class="t-live"><div class="t-live-dot"></div>Real-time</div>
+      </div>
+      <div class="t-body" id="tBody">
+        <div class="t-empty" id="tEmpty">
+          <div style="font-size:32px;opacity:0.3">🎙️</div>
+          <div>Transcript appears here<br>once the call starts</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- ══ WIDGET ══ -->
+<div id="w-wrap">
+  <div id="w-panel">
+    <div class="w-head">
+      <div class="w-agent-row">
+        <div class="w-av">🤖</div>
+        <div>
+          <div class="w-aname" id="wAgentName">Voice AI Demo</div>
+          <div class="w-astatus"><div class="t-live-dot" style="background:var(--green)"></div>Ready</div>
+        </div>
+      </div>
+      <button class="w-close" onclick="toggleWidget()">×</button>
+    </div>
+
+    <div id="w-entry">
+      <p>Enter your website and hear your AI agent answer calls.</p>
+      <div style="font-size:11px;color:var(--muted)">Your website or Facebook page</div>
+      <input class="w-url-in" id="wUrl" type="text" placeholder="yourwebsite.com"
+        autocomplete="off" onkeydown="if(event.key==='Enter') startWidget()"/>
+      <button class="w-start" onclick="startWidget()">Hear It Live 🎙️</button>
+      <div class="w-hint">Personalized to your business in seconds</div>
+    </div>
+
+    <div id="w-analyzing">
+      <div class="spin" style="width:36px;height:36px;margin:0 auto 12px"></div>
+      <div style="font-size:13px;color:var(--muted)">Building your voice agent…</div>
+    </div>
+
+    <div id="w-call">
+      <div class="w-orb" id="wOrb">🤖</div>
+      <div class="w-info">
+        <div class="w-name" id="wName">AI Assistant</div>
+        <div class="w-biz" id="wBizLbl">Revenue Capture AI</div>
+      </div>
+      <div class="w-status-pill">
+        <div class="sdot idle" id="wDot"></div>
+        <span id="wStext">Ready</span>
+      </div>
+      <div class="w-transcript" id="wTranscript">
+        <div style="font-size:12px;color:#2a2a2a;text-align:center">Transcript appears here…</div>
+      </div>
+      <div id="w-controls-pre">
+        <button class="w-start" style="width:100%" onclick="startWCall()">📞 Start Call</button>
+      </div>
+      <div id="w-controls-live" style="display:none;flex-direction:column;align-items:center;gap:10px;width:100%">
+        <button class="w-ptt" id="wPtt" disabled
+          onmousedown="startWRec()" onmouseup="stopWRec()"
+          ontouchstart="startWRec(event)" ontouchend="stopWRec(event)">🎙️</button>
+        <div class="w-ptt-hint"><strong>Hold to speak</strong> · release when done</div>
+        <button class="w-end" onclick="endWCall()">📵</button>
+      </div>
+      <div id="w-cta-area"></div>
+    </div>
+  </div>
+  <button id="w-toggle" onclick="toggleWidget()">🎙️</button>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let biz = { name:'', industry:'', description:'' };
+let wBiz = { name:'', industry:'', description:'' };
+let history = [], wHistory = [];
+let callActive = false, wCallActive = false;
+let isAgentSpeaking = false;
+let ctaShown = false, wCtaShown = false;
+let turnCount = 0, wTurnCount = 0;
+let synth = window.speechSynthesis;
+
+// MediaRecorder for PTT
+let mediaRecorder = null, audioChunks = [];
+let wMediaRecorder = null, wAudioChunks = [];
+let micStream = null, wMicStream = null;
+
+// ══════════════════════════════════════════════
+// SCREEN
+// ══════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ══════════════════════════════════════════════
+// ENTRY
+// ══════════════════════════════════════════════
+function showFallback() { document.getElementById('ind-fallback').style.display = 'flex'; }
+
+function startFromURL() {
+  let raw = document.getElementById('urlIn').value.trim();
+  if (!raw) { document.getElementById('urlIn').focus(); return; }
+  if (!raw.startsWith('http')) raw = 'https://' + raw;
+  biz.url = raw;
+  document.getElementById('aUrl').textContent = raw;
+  showScreen('analyzing-screen');
+  runSteps(); fetchBiz(raw, false);
+}
+function startFromIndustry() {
+  const ind = document.getElementById('indSel').value;
+  const name = document.getElementById('bizN').value.trim();
+  if (!ind) { document.getElementById('indSel').focus(); return; }
+  biz = { name: name || cap(ind)+' Business', industry: ind, description: 'A '+ind+' business' };
+  showScreen('analyzing-screen');
+  runSteps(true);
+}
+function cap(s) { return s.charAt(0).toUpperCase()+s.slice(1); }
+
+// ══════════════════════════════════════════════
+// STEPS
+// ══════════════════════════════════════════════
+let stepIdx = 0, stepTick = null;
+function runSteps(instant) {
+  const ids = ['s1','s2','s3','s4'];
+  ids.forEach(id => { const e = document.getElementById(id); if(e) e.className='a-step'; });
+  if (instant) {
+    ids.forEach(id => { const e = document.getElementById(id); if(e) e.className='a-step done'; });
+    setTimeout(() => launchCallScreen(), 500); return;
+  }
+  stepIdx = 0;
+  stepTick = setInterval(() => {
+    if (stepIdx > 0) { const p = document.getElementById(ids[stepIdx-1]); if(p) p.className='a-step done'; }
+    if (stepIdx < ids.length) { const c = document.getElementById(ids[stepIdx]); if(c) c.className='a-step active'; stepIdx++; }
+  }, 650);
+}
+function finishSteps() {
+  clearInterval(stepTick);
+  ['s1','s2','s3','s4'].forEach(id => { const e = document.getElementById(id); if(e) e.className='a-step done'; });
+}
+
+// ══════════════════════════════════════════════
+// BIZ ANALYSIS
+// ══════════════════════════════════════════════
+async function fetchBiz(url, isWidget) {
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514', max_tokens:300,
+        system:`Identify the business from this URL. Respond ONLY with compact JSON, no markdown, no extra text:
+{"name":"Business Name","industry":"industry type","description":"one sentence what they do"}`,
+        messages:[{role:'user', content:`URL: ${url}`}]
+      })
+    });
+    const d = await r.json();
+    const txt = (d.content||[]).map(b=>b.text||'').join('');
+    let info = {};
+    try { info = JSON.parse(txt.replace(/```json|```/g,'').trim()); } catch(e) {}
+    const domain = url.replace(/https?:\/\/(www\.)?/,'').split('/')[0].split('.')[0];
+    const merged = {
+      name: info.name || cap(domain) || 'Your Business',
+      industry: info.industry || 'business',
+      description: info.description || 'A local business'
+    };
+    if (isWidget) wBiz = merged; else biz = merged;
+  } catch(e) {
+    const domain = url.replace(/https?:\/\/(www\.)?/,'').split('/')[0];
+    const fb = { name:cap(domain)||'Your Business', industry:'business', description:'A local business' };
+    if (isWidget) wBiz = fb; else biz = fb;
+  }
+  finishSteps();
+  setTimeout(() => isWidget ? setupWidget() : launchCallScreen(), 500);
+}
+
+// ══════════════════════════════════════════════
+// CLAUDE API
+// ══════════════════════════════════════════════
+function sysPrompt(ctx) {
+  const n = ctx.name || 'this business';
+  const i = ctx.industry || 'business';
+  const d = ctx.description || 'a local business';
+  return `You are the AI phone receptionist for ${n}, ${d}.
+
+Your job on calls:
+1. Warm, professional greeting using the business name (only on first turn when user says __OPEN__)
+2. Understand why they are calling
+3. Qualify them — what they need, urgency, situation  
+4. Capture their name and best callback number naturally
+5. Book an appointment or route to next step
+
+STRICT RULES — this is a phone call:
+- Maximum 2-3 short sentences per reply. No long monologues.
+- No bullet points, no lists, no markdown. Natural spoken English only.
+- Sound like a professional ${i} receptionist. Warm but efficient.
+- NEVER mention AI, demos, or Claude. Stay 100% in character.
+- If asked if you are an AI say: "I'm ${n}'s virtual receptionist, happy to help!"
+- Do NOT say "Certainly!" or "Absolutely!" — sound natural and human.`;
+}
+
+async function getReply(ctx, hist) {
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514', max_tokens:180,
+        system: sysPrompt(ctx), messages: hist
+      })
+    });
+    const d = await r.json();
+    return (d.content||[]).map(b=>b.text||'').join('').trim()
+      || `Thank you for calling ${ctx.name||'us'}. How can I help you today?`;
+  } catch(e) {
+    return `Thank you for calling ${ctx.name||'us'}. How can I help you today?`;
+  }
+}
+
+// ══════════════════════════════════════════════
+// SPEECH SYNTHESIS
+// ══════════════════════════════════════════════
+function speak(text, orbId, onDone) {
+  synth.cancel();
+  isAgentSpeaking = true;
+  document.getElementById(orbId).classList.add('speaking');
+
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.rate = 0.93; utt.pitch = 1.0; utt.volume = 1.0;
+
+  // Pick best available voice
+  const voices = synth.getVoices();
+  const preferred = voices.find(v =>
+    (v.name.includes('Google') && v.lang === 'en-US') ||
+    v.name === 'Samantha' || v.name === 'Alex' || v.name === 'Karen'
+  ) || voices.find(v => v.lang.startsWith('en') && !v.name.includes('('));
+  if (preferred) utt.voice = preferred;
+
+  utt.onend = () => {
+    isAgentSpeaking = false;
+    document.getElementById(orbId).classList.remove('speaking');
+    onDone && onDone();
+  };
+  utt.onerror = () => {
+    isAgentSpeaking = false;
+    document.getElementById(orbId).classList.remove('speaking');
+    onDone && onDone();
+  };
+  synth.speak(utt);
+}
+
+// Preload voices
+if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = () => synth.getVoices();
+
+// ══════════════════════════════════════════════
+// SPEECH RECOGNITION — via Web Speech API
+// (PTT: only transcribes while held, works file:// in Chrome)
+// ══════════════════════════════════════════════
+let recognition = null;
+let recognizing = false;
+let pendingTranscript = '';
+
+function initRecognition(onResult) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return null;
+  const r = new SR();
+  r.continuous = true;
+  r.interimResults = true;
+  r.lang = 'en-US';
+  r.onresult = (e) => {
+    let final = '', interim = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) final += e.results[i][0].transcript;
+      else interim += e.results[i][0].transcript;
+    }
+    pendingTranscript = final || interim;
+    onResult(final, interim);
+  };
+  r.onerror = () => {};
+  r.onend = () => { recognizing = false; };
+  return r;
+}
+
+// ══════════════════════════════════════════════
+// STANDALONE CALL
+// ══════════════════════════════════════════════
+function launchCallScreen() {
+  showScreen('call-screen');
+  document.getElementById('agentName').textContent = (biz.name||'Your Business') + ' AI';
+  document.getElementById('agentBiz').textContent = biz.name || '';
+}
+
+async function startCall() {
+  callActive = true;
+  document.getElementById('controls-pre').style.display = 'none';
+  document.getElementById('controls-live').style.display = 'flex';
+  document.getElementById('tEmpty') && (document.getElementById('tEmpty').style.display = 'none');
+  setStatus('thinking', 'Connecting…', 'sdot', 'stext');
+
+  // Init speech recognition
+  recognition = initRecognition((final, interim) => {
+    if (!recognizing) return;
+    // Show interim feedback in transcript
+    updateInterim(interim || final);
+  });
+
+  // Get opening greeting
+  history = [{ role:'user', content:'__OPEN__' }];
+  const greeting = await getReply(biz, history);
+  history.push({ role:'assistant', content: greeting });
+  turnCount++;
+  addTranscript('agent', greeting, biz.name || 'Agent');
+  setStatus('speaking', 'Speaking…', 'sdot', 'stext');
+  speak(greeting, 'orb', () => {
+    if (callActive) {
+      setStatus('idle', 'Hold 🎙️ to speak', 'sdot', 'stext');
+      document.getElementById('pttBtn').disabled = false;
+    }
+  });
+}
+
+function endCall() {
+  callActive = false; recognizing = false;
+  if (recognition) { try { recognition.stop(); } catch(e){} recognition = null; }
+  synth.cancel();
+  document.getElementById('orb').classList.remove('speaking','listening-active');
+  document.getElementById('controls-live').style.display = 'none';
+  document.getElementById('controls-pre').style.display = 'flex';
+  setStatus('idle', 'Call ended', 'sdot', 'stext');
+  document.getElementById('pttBtn').disabled = true;
+  if (!ctaShown) { ctaShown = true; showCTA('tBody'); }
+}
+
+// Push-to-talk handlers
+function startRecording(e) {
+  if (e) e.preventDefault();
+  if (!callActive || isAgentSpeaking || !recognition) return;
+  synth.cancel();
+  isAgentSpeaking = false;
+  pendingTranscript = '';
+  removeInterim();
+  recognizing = true;
+  try { recognition.start(); } catch(e) {
+    // already started, stop and restart
+    try { recognition.stop(); } catch(ee){}
+    setTimeout(() => { try { recognition.start(); recognizing = true; } catch(eee){} }, 200);
+  }
+  document.getElementById('pttBtn').classList.add('active');
+  document.getElementById('orb').classList.add('listening-active');
+  setStatus('recording', 'Listening…', 'sdot', 'stext');
+  showRecordingIndicator();
+}
+
+async function stopRecording(e) {
+  if (e) e.preventDefault();
+  if (!callActive) return;
+  recognizing = false;
+  document.getElementById('pttBtn').classList.remove('active');
+  document.getElementById('orb').classList.remove('listening-active');
+  removeInterim();
+  removeRecordingIndicator();
+
+  // Small delay to let final result come in
+  await new Promise(r => setTimeout(r, 300));
+  try { recognition.stop(); } catch(ee){}
+
+  const text = pendingTranscript.trim();
+  if (!text) {
+    setStatus('idle', 'Hold 🎙️ to speak', 'sdot', 'stext');
+    return;
+  }
+  pendingTranscript = '';
+  processUserTurn(text);
+}
+
+async function processUserTurn(text) {
+  addTranscript('user', text, 'You');
+  history.push({ role:'user', content: text });
+  setStatus('thinking', 'Thinking…', 'sdot', 'stext');
+  document.getElementById('pttBtn').disabled = true;
+  turnCount++;
+  if (turnCount >= 4 && !ctaShown) { ctaShown = true; setTimeout(() => showCTA('tBody'), 600); }
+
+  const reply = await getReply(biz, history);
+  history.push({ role:'assistant', content: reply });
+  addTranscript('agent', reply, biz.name || 'Agent');
+  setStatus('speaking', 'Speaking…', 'sdot', 'stext');
+  speak(reply, 'orb', () => {
+    if (callActive) {
+      setStatus('idle', 'Hold 🎙️ to speak', 'sdot', 'stext');
+      document.getElementById('pttBtn').disabled = false;
+    }
+  });
+}
+
+// ══════════════════════════════════════════════
+// WIDGET CALL
+// ══════════════════════════════════════════════
+let wRecognition = null, wRecognizing = false, wPendingTranscript = '';
+
+function toggleWidget() { document.getElementById('w-panel').classList.toggle('open'); }
+
+async function startWidget() {
+  let raw = document.getElementById('wUrl').value.trim();
+  if (!raw) { document.getElementById('wUrl').focus(); return; }
+  if (!raw.startsWith('http')) raw = 'https://' + raw;
+  document.getElementById('w-entry').style.display = 'none';
+  document.getElementById('w-analyzing').style.display = 'block';
+  await fetchBiz(raw, true);
+}
+
+function setupWidget() {
+  document.getElementById('w-analyzing').style.display = 'none';
+  document.getElementById('w-entry').style.display = 'none';
+  const wc = document.getElementById('w-call');
+  wc.style.display = 'flex';
+  document.getElementById('wAgentName').textContent = (wBiz.name||'Your Business') + ' AI';
+  document.getElementById('wName').textContent = (wBiz.name||'Your Business') + ' AI';
+  document.getElementById('wBizLbl').textContent = 'Revenue Capture AI';
+}
+
+async function startWCall() {
+  wCallActive = true;
+  document.getElementById('w-controls-pre').style.display = 'none';
+  const wlive = document.getElementById('w-controls-live');
+  wlive.style.display = 'flex';
+  setStatus('thinking', 'Connecting…', 'wDot', 'wStext');
+
+  wRecognition = initRecognition((final, interim) => {
+    if (!wRecognizing) return;
+    wPendingTranscript = final || interim;
+  });
+
+  wHistory = [{ role:'user', content:'__OPEN__' }];
+  const greeting = await getReply(wBiz, wHistory);
+  wHistory.push({ role:'assistant', content: greeting });
+  wTurnCount++;
+  addWTranscript('agent', greeting);
+  setStatus('speaking', 'Speaking…', 'wDot', 'wStext');
+  speak(greeting, 'wOrb', () => {
+    if (wCallActive) {
+      setStatus('idle', 'Hold 🎙️ to speak', 'wDot', 'wStext');
+      document.getElementById('wPtt').disabled = false;
+    }
+  });
+}
+
+function endWCall() {
+  wCallActive = false; wRecognizing = false;
+  if (wRecognition) { try { wRecognition.stop(); } catch(e){} wRecognition = null; }
+  synth.cancel();
+  document.getElementById('wOrb').classList.remove('speaking','listening-active');
+  document.getElementById('w-controls-live').style.display = 'none';
+  document.getElementById('w-controls-pre').style.display = 'block';
+  setStatus('idle', 'Call ended', 'wDot', 'wStext');
+  document.getElementById('wPtt').disabled = true;
+  if (!wCtaShown) { wCtaShown = true; showWCTA(); }
+}
+
+function startWRec(e) {
+  if (e) e.preventDefault();
+  if (!wCallActive || isAgentSpeaking || !wRecognition) return;
+  synth.cancel(); isAgentSpeaking = false;
+  wPendingTranscript = ''; wRecognizing = true;
+  try { wRecognition.start(); } catch(e) {
+    try { wRecognition.stop(); } catch(ee){}
+    setTimeout(() => { try { wRecognition.start(); wRecognizing = true; } catch(eee){} }, 200);
+  }
+  document.getElementById('wPtt').classList.add('active');
+  document.getElementById('wOrb').classList.add('listening-active');
+  setStatus('recording', 'Listening…', 'wDot', 'wStext');
+}
+
+async function stopWRec(e) {
+  if (e) e.preventDefault();
+  if (!wCallActive) return;
+  wRecognizing = false;
+  document.getElementById('wPtt').classList.remove('active');
+  document.getElementById('wOrb').classList.remove('listening-active');
+  await new Promise(r => setTimeout(r, 300));
+  try { wRecognition.stop(); } catch(ee){}
+
+  const text = wPendingTranscript.trim();
+  wPendingTranscript = '';
+  if (!text) { setStatus('idle', 'Hold 🎙️ to speak', 'wDot', 'wStext'); return; }
+
+  addWTranscript('user', text);
+  wHistory.push({ role:'user', content: text });
+  setStatus('thinking', 'Thinking…', 'wDot', 'wStext');
+  document.getElementById('wPtt').disabled = true;
+  wTurnCount++;
+  if (wTurnCount >= 4 && !wCtaShown) { wCtaShown = true; setTimeout(showWCTA, 600); }
+
+  const reply = await getReply(wBiz, wHistory);
+  wHistory.push({ role:'assistant', content: reply });
+  addWTranscript('agent', reply);
+  setStatus('speaking', 'Speaking…', 'wDot', 'wStext');
+  speak(reply, 'wOrb', () => {
+    if (wCallActive) {
+      setStatus('idle', 'Hold 🎙️ to speak', 'wDot', 'wStext');
+      document.getElementById('wPtt').disabled = false;
+    }
+  });
+}
+
+// ══════════════════════════════════════════════
+// DOM HELPERS
+// ══════════════════════════════════════════════
+function setStatus(state, text, dotId, textId) {
+  document.getElementById(dotId).className = 'sdot ' + state;
+  document.getElementById(textId).textContent = text;
+}
+
+function addTranscript(role, text, speaker) {
+  const body = document.getElementById('tBody');
+  const d = document.createElement('div');
+  d.className = `t-msg ${role}`;
+  d.innerHTML = `<div class="t-speaker">${role==='agent'?'🤖 '+speaker:'👤 You'}</div>
+    <div class="t-text">${esc(text)}</div>`;
+  body.appendChild(d); body.scrollTop = 99999;
+}
+
+function updateInterim(text) {
+  let el = document.getElementById('interimLine');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'interimLine';
+    el.className = 't-recording';
+    el.innerHTML = `<div class="rec-dot"></div><span id="interimText"></span>`;
+    document.getElementById('tBody').appendChild(el);
+  }
+  document.getElementById('interimText').textContent = text || '…';
+  document.getElementById('tBody').scrollTop = 99999;
+}
+function removeInterim() {
+  const el = document.getElementById('interimLine');
+  if (el) el.remove();
+}
+
+function showRecordingIndicator() {
+  let el = document.getElementById('recLine');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'recLine';
+    el.className = 't-recording';
+    el.innerHTML = `<div class="rec-dot"></div><span>Recording… speak now</span>`;
+    document.getElementById('tBody').appendChild(el);
+    document.getElementById('tBody').scrollTop = 99999;
+  }
+}
+function removeRecordingIndicator() {
+  const el = document.getElementById('recLine');
+  if (el) el.remove();
+}
+
+function showCTA(bodyId) {
+  const body = document.getElementById(bodyId);
+  const d = document.createElement('div');
+  d.className = 't-cta';
+  d.innerHTML = `<p><strong>This is Revenue Capture AI in action.</strong><br>Your customers could hear this every time they call — 24/7, no staff needed.</p>
+    <button class="t-cta-btn" onclick="window.location.href='mailto:sales@ROIPredictions.com'">Book a Real Demo →</button>`;
+  body.appendChild(d); body.scrollTop = 99999;
+}
+
+function showWCTA() {
+  document.getElementById('w-cta-area').innerHTML = `<div class="w-cta">
+    <p><strong>This is Revenue Capture AI.</strong><br>Your callers could hear this 24/7.</p>
+    <button class="w-cta-btn" onclick="window.location.href='mailto:sales@ROIPredictions.com'">Book a Real Demo →</button>
+  </div>`;
+}
+
+function addWTranscript(role, text) {
+  const body = document.getElementById('wTranscript');
+  const ph = body.querySelector('div[style]');
+  if (ph) ph.remove();
+  const d = document.createElement('div');
+  d.className = `wt-line ${role}`;
+  d.textContent = (role==='agent'?'🤖 ':'👤 ') + text;
+  body.appendChild(d); body.scrollTop = 99999;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+</script>
+</body>
+</html>
