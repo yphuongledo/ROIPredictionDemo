@@ -391,18 +391,18 @@
 
   <!-- ENTRY -->
   <div id="entry-screen">
-    <p class="entry-eyebrow">Revenue Capture AI — Interactive Demo</p>
-    <h1 class="entry-h1">Watch AI answer your leads <em>right now</em></h1>
-    <p class="entry-sub">Enter your business website or Facebook page and we'll instantly show you how Revenue Capture AI would work for <em>your</em> customers.</p>
+      <p class="entry-eyebrow">Revenue Capture AI — Interactive Demo</p>
+      <h1 class="entry-h1">Watch AI answer your leads <em>right now</em></h1>
+      <p class="entry-sub">Enter your business website and we'll instantly show you how Revenue Capture AI would work for <em>your</em> customers.</p>
 
-    <!--<div class="url-form">
+      <!--<div class="url-form">
         <div class="url-input-wrap">
             <span class="url-icon">🌐</span>
 
             <input class="url-input"
                    id="urlInput"
                    type="text"
-                   placeholder="yourwebsite.com or facebook.com/yourbusiness"
+                   placeholder="yourwebsite.com"
                    autocomplete="off"
                    spellcheck="false"
                    onkeydown="if(event.key==='Enter') startFromURL(event)" />
@@ -423,66 +423,66 @@
             <a onclick="showFallback()">Tell us your industry instead</a>
         </div>
     </div>-->
-    <div id="url-form" class="url-form">
-        <div class="fi-label">Your Website URL</div>
-        <input class="fi-input"
-               id="urlInput"
-               type="text"
-               placeholder="yourwebsite.com or facebook.com/yourbusiness"
-               autocomplete="off"
-               spellcheck="false"
-               onkeydown="if(event.key==='Enter') startFromURL(event)" />
-        <div class="fi-label">Your phone number</div>
-        <input class="fi-input" id="txtPhone" type="tel" placeholder="xxx-xxx-xxxx" pattern="[0-9+\s\-\(\)]{7,20}" />
-        <div class="fi-label">Your email</div>
-        <input class="fi-input" id="txtEmail" type="email" placeholder="your-email@business.com" />
-        <button class="url-btn"
-                id="urlBtn"
-                onclick="startFromURL(event)">
-            Show Me →
-        </button>
-        <div class="url-fallback">
-            No website yet?
-            <a onclick="showFallback()">Tell us your industry instead</a>
-        </div>
-    </div>
+      <div id="url-form" class="url-form">
+          <div class="fi-label">Your Website URL</div>
+          <input class="fi-input"
+                 id="urlInput"
+                 type="text"
+                 placeholder="yourwebsite.com"
+                 autocomplete="off"
+                 spellcheck="false"
+                 onkeydown="if(event.key==='Enter') startFromURL(event)" />
+          <div class="fi-label">Your phone number</div>
+          <input class="fi-input" id="txtPhone" type="tel" placeholder="xxx-xxx-xxxx" pattern="[0-9+\s\-\(\)]{7,20}" />
+          <div class="fi-label">Your email</div>
+          <input class="fi-input" id="txtEmail" type="email" placeholder="your-email@business.com" />
+          <button class="url-btn"
+                  id="urlBtn"
+                  onclick="startFromURL(event)">
+              Show Me →
+          </button>
+          <div class="url-fallback">
+              No website yet?
+              <a onclick="showFallback()">Tell us your industry instead</a>
+          </div>
+      </div>
 
-    <div id="industry-fallback">
-        <div class="fi-label">Business name (optional)</div>
-        <input class="fi-input" id="bizName" type="text" placeholder="e.g. Apex Roofing, Smith Dental…" />
-        <div class="fi-label">Your industry</div>
-        <select class="fi-select" id="industrySelect">
-            <option value="">Select your industry…</option>
-            <option value="roofing">Roofing</option>
-            <option value="hvac">HVAC</option>
-            <option value="plumbing">Plumbing</option>
-            <option value="law firm">Law Firm</option>
-            <option value="dental">Dental / Medical</option>
-            <option value="real estate">Real Estate</option>
-            <option value="ecommerce">E-Commerce</option>
-            <option value="restaurant">Restaurant</option>
-            <option value="fitness">Fitness / Gym</option>
-            <option value="marketing agency">Marketing Agency</option>
-            <option value="home services">Home Services</option>
-            <option value="other">Other</option>
-        </select>
-        <div class="fi-label">Your phone number</div>
-        <input class="fi-input" id="txtPhone2" type="tel" placeholder="xxx-xxx-xxxx" />
-        <div class="fi-label">Your email</div>
-        <input class="fi-input" id="txtEmail2" type="email" placeholder="your-email@business.com" />
+      <div id="industry-fallback">
+          <div class="fi-label">Business name (optional)</div>
+          <input class="fi-input" id="bizName" type="text" placeholder="Business name (optional)" />
+          <div class="fi-label">Your industry</div>
+          <select class="fi-select" id="industrySelect">
+              <option value="">Select your industry…</option>
+              <option value="roofing">Roofing</option>
+              <option value="hvac">HVAC</option>
+              <option value="plumbing">Plumbing</option>
+              <option value="law firm">Law Firm</option>
+              <option value="dental">Dental / Medical</option>
+              <option value="real estate">Real Estate</option>
+              <option value="ecommerce">E-Commerce</option>
+              <option value="restaurant">Restaurant</option>
+              <option value="fitness">Fitness / Gym</option>
+              <option value="marketing agency">Marketing Agency</option>
+              <option value="home services">Home Services</option>
+              <option value="other">Other</option>
+          </select>
+          <div class="fi-label">Your phone number</div>
+          <input class="fi-input" id="txtPhone2" type="tel" placeholder="xxx-xxx-xxxx" />
+          <div class="fi-label">Your email</div>
+          <input class="fi-input" id="txtEmail2" type="email" placeholder="your-email@business.com" />
 
-        <button class="fi-btn" id="urlBtn1" onclick="startFromIndustry(event)">Start Demo →</button>
-        <div class="url-fallback">
-            You have your business website or Facebook page?
-            <a onclick="showURL()">Tell us</a>
-        </div>
-    </div>
+          <button class="fi-btn" id="urlBtn1" onclick="startFromIndustry(event)">Start Demo →</button>
+          <div class="url-fallback">
+              You have your business website?
+              <a onclick="showURL()">Tell us</a>
+          </div>
+      </div>
 
-    <div class="trust-row">
-      <div class="trust-item"><div class="trust-dot"></div>No signup required</div>
-      <div class="trust-item"><div class="trust-dot"></div>Personalized to your business</div>
-      <div class="trust-item"><div class="trust-dot"></div>Experience it as your customer would</div>
-    </div>
+      <div class="trust-row">
+          <div class="trust-item"><div class="trust-dot"></div>No signup required</div>
+          <div class="trust-item"><div class="trust-dot"></div>Personalized to your business</div>
+          <div class="trust-item"><div class="trust-dot"></div>Experience it as your customer would</div>
+      </div>
   </div>
 
   <!-- ANALYZING -->
@@ -546,7 +546,7 @@
     <div id="w-entry">
       <div class="w-entry">
         <p>Enter your website and watch your AI agent come to life.</p>
-        <div class="w-label">Your website or Facebook page</div>
+        <div class="w-label">Your website</div>
         <input class="w-url" id="wUrl" type="text" placeholder="yourwebsite.com"
           autocomplete="off" onkeydown="if(event.key==='Enter') startWidget()"/>
         <button class="w-start" onclick="startWidget()">See It Live →</button>
