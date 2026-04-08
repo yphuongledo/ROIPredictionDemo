@@ -761,7 +761,7 @@ async function getGreeting(ctx) {
   } catch(e) { return defaultGreeting(ctx); }
 }
 function defaultGreeting(ctx) {
-  return `Hi there! Thanks for reaching out to ${ctx.name||'us'}. I'm here to help — what brings you in today?`;
+  return `Hi there! Thanks for reaching out to ${ctx.name||'us'}. I'm here to help - what brings you in today?`;
 }
 
 // ── SEND MESSAGE ──
@@ -1109,7 +1109,7 @@ async function startFromIndustry(event) {
       console.log("n8n response:", result);
 
       //alert("Your request has been sent.  We will contact you soon.");
-      biz = { bizName: name || (industry.charAt(0).toUpperCase()+industry.slice(1)+' Business'), phone: phone, email: email, industry: industry, description: 'A ' + industry + ' business', tone: 'friendly' };
+      biz = { name: name || (industry.charAt(0).toUpperCase()+industry.slice(1)+' Business'), phone: phone, email: email, industry: industry, description: 'A ' + industry + ' business', tone: 'friendly' };
       goAnalyzing('', false);
 
       // nếu muốn redirect sau khi gọi thành công
