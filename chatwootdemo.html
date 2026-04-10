@@ -1101,11 +1101,18 @@
         function updateChat(company) {
             if (!window.$chatwoot) return;
 
+            // reset conversation cũ
+            window.$chatwoot.reset();
+
+            setTimeout(() => {
+            // set lại thông tin mới
             window.$chatwoot.setCustomAttributes({
                 company_name: company
             });
-
+            
+            // mở chat mới
             window.$chatwoot.toggle("open");
+            }, 500);
         }
 
         document.addEventListener("DOMContentLoaded", function () {
