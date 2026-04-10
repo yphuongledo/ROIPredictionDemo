@@ -628,11 +628,12 @@ function goAnalyzing(url, isWidget) {
     document.getElementById('analyzingUrl').textContent = url;
   }
   runSteps(isWidget);
-  if (url) {
-    fetchBizInfo(url, isWidget);
-  } else {
-    setTimeout(() => { finishSteps(); setTimeout(() => isWidget ? launchWidget() : launchChat(), 500); }, 3000);
-  }
+  //if (url) {
+  //  fetchBizInfo(url, isWidget);
+  //} else {
+  //  setTimeout(() => { finishSteps(); setTimeout(() => isWidget ? launchWidget() : launchChat(), 500); }, 3000);
+  //  }
+    setTimeout(() => { finishSteps(); setTimeout(() => location.href = 'chatwootdemo.html', 500); }, 3000);
 }
 
 // ── BIZ ANALYSIS VIA CLAUDE ──

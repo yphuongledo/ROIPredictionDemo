@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Support Chat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .preview-box {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #f5f5f5;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Enter company name to start chat</h2>
+
+  <input
+    type="text"
+    id="companyName"
+    placeholder="Example: ABC Company"
+  />
+
+  <button onclick="startChat()">Start Chat</button>
+
+  <div id="previewBox" class="preview-box"></div>
+
+  <script>
+    let chatLoaded = false;
+
+    function startChat() {
+      const companyInput = document.getElementById("companyName");
+      const company = companyInput.value.trim();
+
+      if (!company) {
+        alert("Please enter company name");
+        companyInput.focus();
+        return;
+      }
+
+      const previewBox = document.getElementById("previewBox");
+      previewBox.style.display = "block";
+      previewBox.innerHTML = `
+        <strong>AI Agent for:</strong> ${company}
+      `;
+
+      if (!chatLoaded) {
+        loadChatwoot(company);
+        chatLoaded = true;
+      } else {
+        updateChat(company);
+      }
+    }
+
+    function loadChatwoot(company) {
+      const BASE_URL = "https://chat.securegreen.co";
+      const WEBSITE_TOKEN = "dkvsNVEt8iPLSacsw9ygMtkB";
+
+      window.chatwootSettings = {
+        position: "right",
+        locale: "en",
+        type: "standard",
+
+        // Đây là phần hiển thị trong cửa sổ chat
+        welcomeTitle: `Hi there, this is ${company} 👋`,
+        welcomeDescription: "I am an AI Agent and I am here to support you."
+      };
+
+      const script = document.createElement("script");
+      script.src = BASE_URL + "/packs/js/sdk.js";
+      script.async = true;
+
+      script.onload = function () {
+        window.chatwootSDK.run({
+          websiteToken: "dkvsNVEt8iPLSacsw9ygMtkB",
+          baseUrl: BASE_URL
+        });
+
+        setTimeout(() => {
+          updateChat(company);
+        }, 800);
+      };
+
+      document.body.appendChild(script);
+    }
+
+    function updateChat(company) {
+      if (!window.$chatwoot) return;
+
+      window.$chatwoot.setCustomAttributes({
+        company_name: company
+      });
+
+      window.$chatwoot.toggle("open");
+    }
+  </script>
+
+</body>
+</html>
