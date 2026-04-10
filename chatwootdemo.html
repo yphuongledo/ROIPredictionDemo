@@ -44,7 +44,7 @@
 
         /* ── TOP BAR ── */
         .top-bar {
-            display: flex;
+            /*display: flex;*/
             align-items: center;
             justify-content: space-between;
             padding: 20px 40px;
@@ -61,7 +61,7 @@
             font-weight: 700;
             font-size: 17px;
             letter-spacing: -0.01em;
-            color: #fff;
+            color: #00aeff;
         }
 
             .logo-text span {
@@ -1003,8 +1003,8 @@
 <body>
     <div id="standalone-page">
         <header class="top-bar">
-            <div class="logo-text">ROI <span>Predictions</span> Automation</div>
-            <div class="demo-badge">Live Demo</div>
+            <div class="logo-text" id="divHeaderText">&lt;Your Company Name&gt;</div>
+            <div class="entry-sub" id="pIndustry" style="margin: initial;"></div>
         </header>
 
         <!-- ENTRY -->
@@ -1107,6 +1107,18 @@
 
             window.$chatwoot.toggle("open");
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const biz = JSON.parse(sessionStorage.getItem("biz"));
+
+            if (biz) {
+                document.getElementById("divHeaderText").innerHTML = biz.name;
+                document.getElementById("pIndustry").innerHTML = biz.industry;
+                //sessionStorage.setItem("biz", '');
+            } else {
+                document.getElementById("result").innerHTML = "No data!";
+            }
+        });
     </script>
 
 </body>

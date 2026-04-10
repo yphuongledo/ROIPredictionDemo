@@ -621,20 +621,25 @@ function startFromIndustry() {
   goAnalyzing('', false);
 }
 
-function goAnalyzing(url, isWidget) {
-  if (!isWidget) {
-    document.getElementById('entry-screen').style.display = 'none';
-    document.getElementById('analyzing-screen').style.display = 'flex';
-    document.getElementById('analyzingUrl').textContent = url;
-  }
-  runSteps(isWidget);
-  //if (url) {
-  //  fetchBizInfo(url, isWidget);
-  //} else {
-  //  setTimeout(() => { finishSteps(); setTimeout(() => isWidget ? launchWidget() : launchChat(), 500); }, 3000);
-  //  }
-    setTimeout(() => { finishSteps(); setTimeout(() => location.href = 'chatwootdemo.html', 500); }, 3000);
-}
+    function goAnalyzing(url, isWidget) {
+        if (!isWidget) {
+            document.getElementById('entry-screen').style.display = 'none';
+            document.getElementById('analyzing-screen').style.display = 'flex';
+            document.getElementById('analyzingUrl').textContent = url;
+        }
+        runSteps(isWidget);
+        //if (url) {
+        //  fetchBizInfo(url, isWidget);
+        //} else {
+        //  setTimeout(() => { finishSteps(); setTimeout(() => isWidget ? launchWidget() : launchChat(), 500); }, 3000);
+        //  }
+        setTimeout(() => { finishSteps(); setTimeout(() => GoToChatWoot(), 500); }, 3000);
+    }
+
+    function GoToChatWoot() {
+        sessionStorage.setItem("biz", JSON.stringify(biz));
+        location.href = 'chatwootdemo.html';
+    }
 
 // ── BIZ ANALYSIS VIA CLAUDE ──
 async function fetchBizInfo(url, isWidget) {
@@ -1049,7 +1054,7 @@ async function startFromURL(event) {
         console.log("n8n response:", result);
 
         //alert("Your request has been sent.  We will contact you soon.");
-        biz = { name: rawUrl, url: rawUrl, phone: phone, email: email, tone: 'friendly' };
+        biz = { name: rawUrl, url: rawUrl, industry: '', phone: phone, email: email, tone: 'friendly' };
         //startFromURL2();
 
         // nếu muốn redirect sau khi gọi thành công
@@ -1110,7 +1115,7 @@ async function startFromIndustry(event) {
       console.log("n8n response:", result);
 
       //alert("Your request has been sent.  We will contact you soon.");
-      biz = { name: name || (industry.charAt(0).toUpperCase()+industry.slice(1)+' Business'), phone: phone, email: email, industry: industry, description: 'A ' + industry + ' business', tone: 'friendly' };
+      biz = { name: name || (industry.charAt(0).toUpperCase()+industry.slice(1)+' Business'), url: '', phone: phone, email: email, industry: industry, description: 'A ' + industry + ' business', tone: 'friendly' };
       goAnalyzing('', false);
 
       // nếu muốn redirect sau khi gọi thành công
