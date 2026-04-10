@@ -85,7 +85,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            /*justify-content: center;*/
             min-height: calc(100vh - 105px);
             padding: 60px 20px;
             text-align: center;
@@ -1010,7 +1010,7 @@
         <!-- ENTRY -->
         <div id="entry-screen">
             <h1 class="entry-h1">Your Website here</h1>
-            <p class="entry-sub">Enter company name to start chat</p>
+            <!--<p class="entry-sub">Enter company name to start chat</p>
 
             <div id="url-form" class="url-form">
                 <input type="text" class="fi-input"
@@ -1020,7 +1020,7 @@
                        spellcheck="false"
                        onkeydown="if(event.key==='Enter') startChat()" />
                 <button class="url-btn" onclick="startChat()">Start Chat</button>
-            </div>
+            </div>-->
         </div>
 
         <!-- ANALYZING -->
@@ -1041,16 +1041,16 @@
     <div id="previewBox" class="preview-box"></div>
     <script>
         let chatLoaded = false;
-
         function startChat() {
-            const companyInput = document.getElementById("companyName");
-            const company = companyInput.value.trim();
+            //const companyInput = document.getElementById("companyName");
+            //const company = companyInput.value.trim();
+            const company = document.getElementById("divHeaderText").innerHTML;
 
-            if (!company) {
-                alert("Please enter company name");
-                companyInput.focus();
-                return;
-            }
+            //if (!company) {
+            //    alert("Please enter company name");
+            //    companyInput.focus();
+            //    return;
+            //}
 
             const previewBox = document.getElementById("previewBox");
             previewBox.style.display = "block";
@@ -1124,8 +1124,10 @@
                 document.getElementById("pIndustry").innerHTML = biz.industry;
                 //sessionStorage.setItem("biz", '');
             } else {
-                document.getElementById("result").innerHTML = "No data!";
+                //document.getElementById("result").innerHTML = "No data!";
             }
+
+            startChat();
         });
     </script>
 
