@@ -1336,7 +1336,7 @@ async function startFromURL(event) {
             body: JSON.stringify({
                 APIKey: '1207371337dff3374a2a38f27e6c3305',
                 website_url: websiteUrl,
-                biz_name: websiteUrl || 'ROI Predictions',
+                biz_name: websiteUrl.replace(/https?:\/\/(www\.)?/, '').split('/')[0].split('.')[0],
                 industry: '',
                 user_phone: phone,
                 user_email: email
