@@ -1336,7 +1336,7 @@ async function startFromURL(event) {
             body: JSON.stringify({
                 APIKey: '1207371337dff3374a2a38f27e6c3305',
                 website_url: websiteUrl,
-                biz_name: websiteUrl,
+                biz_name: websiteUrl || 'ROI Predictions',
                 industry: '',
                 user_phone: phone,
                 user_email: email
@@ -1416,7 +1416,7 @@ async function startFromIndustry(event) {
           body: JSON.stringify({
               APIKey: '1207371337dff3374a2a38f27e6c3305',
               website_url: '',
-              biz_name: bizName,
+              biz_name: bizName || 'ROI Predictions',
               industry: industry,
               user_phone: phone,
               user_email: email
