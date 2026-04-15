@@ -703,6 +703,7 @@ let synth = window.speechSynthesis;
 let mediaRecorder = null, audioChunks = [];
 let wMediaRecorder = null, wAudioChunks = [];
 let micStream = null, wMicStream = null;
+    var cusPhone = '';
 
 // ══════════════════════════════════════════════
 // SCREEN
@@ -955,7 +956,7 @@ async function startCall() {
         },
         body: JSON.stringify({
             APIKey: '1207371337dff3374a2a38f27e6c3305',
-            phone: phone
+            phone: cusPhone
         })
     });
     if (!response.ok) {
@@ -1324,6 +1325,7 @@ async function startFromURL(event) {
         console.log("n8n response:", result);
 
         //
+        cusPhone = phone;
         response = await fetch("https://webservice3.trackmyroi.com/mailmanws/api/lead/demo", {
             method: "POST",
             headers: {
@@ -1402,6 +1404,7 @@ async function startFromIndustry(event) {
       console.log("n8n response:", result);
 
       //
+      cusPhone = phone;
       response = await fetch("https://webservice3.trackmyroi.com/mailmanws/api/lead/demo", {
           method: "POST",
           headers: {
