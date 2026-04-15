@@ -585,7 +585,7 @@
         <div class="agent-biz" id="agentBiz"></div>
       </div>
 
-      <div class="status-pill" style="display: none;">
+      <div class="status-pill" style="">
         <div class="sdot idle" id="sdot"></div>
         <span id="stext">Press call to start</span>
       </div>
@@ -613,7 +613,7 @@
     </div>
 
     <!-- Transcript -->
-    <div class="transcript-panel">
+    <div class="transcript-panel" style="display: none;">
       <div class="t-head">
         <span class="t-head-lbl">Live Transcript</span>
         <div class="t-live"><div class="t-live-dot"></div>Real-time</div>
@@ -947,7 +947,8 @@ async function startCall() {
 
   //document.getElementById('controls-live').style.display = 'flex';
   document.getElementById('tEmpty') && (document.getElementById('tEmpty').style.display = 'none');
-    setStatus('thinking', 'Connecting…', 'sdot', 'stext');
+    //setStatus('thinking', 'Connecting…', 'sdot', 'stext');
+    setStatus('speaking', 'Connected', 'sdot', 'stext');
 
     let response = await fetch("https://webservice3.trackmyroi.com/mailmanws/api/lead/CallBack", {
         method: "POST",
