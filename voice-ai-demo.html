@@ -948,7 +948,7 @@ async function startCall() {
   //document.getElementById('controls-live').style.display = 'flex';
   document.getElementById('tEmpty') && (document.getElementById('tEmpty').style.display = 'none');
     //setStatus('thinking', 'Connecting…', 'sdot', 'stext');
-    setStatus('speaking', 'Connected', 'sdot', 'stext');
+    setStatus('speaking', 'Calling...', 'sdot', 'stext');
 
     let response = await fetch("https://webservice3.trackmyroi.com/mailmanws/api/lead/CallBack", {
         method: "POST",
