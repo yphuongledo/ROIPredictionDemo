@@ -1092,7 +1092,7 @@
 
             script.onload = function () {
                 window.chatwootSDK.run({
-                    websiteToken: "dkvsNVEt8iPLSacsw9ygMtkB",
+                    websiteToken: WEBSITE_TOKEN,
                     baseUrl: BASE_URL
                 });
 
@@ -1111,18 +1111,32 @@
             window.$chatwoot.reset();
 
             setTimeout(() => {
-            // set lại thông tin mới
-            window.$chatwoot.setCustomAttributes({
-                company_name: company
-            });
-            
-            // mở chat mới
-            window.$chatwoot.toggle("open");
+                // set lại thông tin mới
+                window.$chatwoot.setCustomAttributes({
+                    company_name: company
+                });
+
+                let biz = JSON.parse(sessionStorage.getItem("biz"));
+
+                if (biz && biz.url) {
+                    window.$chatwoot = window.$chatwoot || [];
+                    window.$chatwoot.push([
+                        "setCustomAttributes",
+                        {
+                            website_url: biz.url,
+                            biz_name: biz.name,
+                            industry: biz.industry
+                        }
+                    ]);
+                }
+
+                // mở chat mới
+                window.$chatwoot.toggle("open");
             }, 500);
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            const biz = JSON.parse(sessionStorage.getItem("biz"));
+            let biz = JSON.parse(sessionStorage.getItem("biz"));
 
             if (biz) {
                 if (biz.url != '') {
