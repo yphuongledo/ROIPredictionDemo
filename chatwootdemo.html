@@ -1004,12 +1004,12 @@
     <div id="standalone-page">
         <header class="top-bar">
             <div class="logo-text" id="divHeaderText">&lt;Your Company Name&gt;</div>
-            <div class="entry-sub" id="pIndustry" style="margin: initial; font-size: 13px;"></div>
+            <div class="entry-sub" id="pIndustry" style="margin: initial; font-size: 13px; display: none;"></div>
         </header>
 
         <!-- ENTRY -->
         <div id="entry-screen">
-            <h1 class="entry-h1">Your Website here</h1>
+            <h1 class="entry-h1" id="textBizDesc">Your Website here</h1>
             <!--<p class="entry-sub">Enter company name to start chat</p>
 
             <div id="url-form" class="url-form">
@@ -1153,6 +1153,7 @@
                     if (biz.name)
                         document.getElementById("divHeaderText").innerHTML = biz.name;
                     document.getElementById("pIndustry").innerHTML = biz.industry;
+                    document.getElementById("textBizDesc").innerHTML = biz.description;
                 }
             } else {
                 //document.getElementById("result").innerHTML = "No data!";
