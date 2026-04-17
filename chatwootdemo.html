@@ -1111,23 +1111,22 @@
             window.$chatwoot.reset();
 
             setTimeout(() => {
-                // set lại thông tin mới
-                window.$chatwoot.setCustomAttributes({
-                    company_name: company
-                });
-
                 let biz = JSON.parse(sessionStorage.getItem("biz"));
 
                 if (biz && biz.url) {
-                    window.$chatwoot = window.$chatwoot || [];
-                    window.$chatwoot.push([
-                        "setCustomAttributes",
-                        {
-                            website_url: biz.url,
-                            biz_name: biz.name,
-                            industry: biz.industry
-                        }
-                    ]);
+                    // set lại thông tin mới
+                    window.$chatwoot.setCustomAttributes({
+                        company_name: company,
+                        website_url: biz.url,
+                        biz_name: biz.name,
+                        industry: biz.industry
+                    });
+                }
+                else {
+                    // set lại thông tin mới
+                    window.$chatwoot.setCustomAttributes({
+                        company_name: company
+                    });
                 }
 
                 // mở chat mới
@@ -1155,7 +1154,6 @@
                         document.getElementById("divHeaderText").innerHTML = biz.name;
                     document.getElementById("pIndustry").innerHTML = biz.industry;
                 }
-                //sessionStorage.setItem("biz", '');
             } else {
                 //document.getElementById("result").innerHTML = "No data!";
             }
