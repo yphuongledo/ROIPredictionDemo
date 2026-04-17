@@ -1043,7 +1043,7 @@ function validateURL(url) {
             console.log("n8n response:", result);
 
             //alert("Your request has been sent.  We will contact you soon.");
-            biz = { name: rawUrl, url: rawUrl, industry: '', phone: phone, email: email, tone: 'friendly' };
+            biz = { name: rawUrl.replace(/https?:\/\/(www\.)?/, '').split('/')[0], url: rawUrl, industry: '', phone: phone, email: email, tone: 'friendly' };
             //startFromURL2();
 
             // nếu muốn redirect sau khi gọi thành công

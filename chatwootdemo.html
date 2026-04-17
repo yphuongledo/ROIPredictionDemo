@@ -1149,12 +1149,12 @@
                     document.getElementById("divIFrame").style.display = 'none';
                     document.getElementById("standalone-page").style.display = '';
                     document.getElementById("previewBox").style.display = '';
-
-                    if (biz.name)
-                        document.getElementById("divHeaderText").innerHTML = biz.name;
-                    document.getElementById("pIndustry").innerHTML = biz.industry;
-                    document.getElementById("textBizDesc").innerHTML = biz.description;
                 }
+
+                if (biz.name)
+                    document.getElementById("divHeaderText").innerHTML = biz.name;
+                document.getElementById("pIndustry").innerHTML = biz.industry;
+                document.getElementById("textBizDesc").innerHTML = biz.description;
             } else {
                 //document.getElementById("result").innerHTML = "No data!";
             }
