@@ -1086,6 +1086,15 @@
                 welcomeDescription: "I am an AI Agent and I am here to support you."
             };
 
+            // LẮNG NGHE SỰ KIỆN READY TẠI ĐÂY
+            window.addEventListener("chatwoot:ready", function () {
+                console.log("Chatwoot SDK is ready!");
+                // Đợi 200ms để chắc chắn Session/Cookie đã được SDK thiết lập xong
+                setTimeout(() => {
+                    updateChat(company);
+                }, 200);
+            });
+
             const script = document.createElement("script");
             script.src = BASE_URL + "/packs/js/sdk.js";
             script.async = true;
@@ -1095,10 +1104,6 @@
                     websiteToken: WEBSITE_TOKEN,
                     baseUrl: BASE_URL
                 });
-
-                setTimeout(() => {
-                    updateChat(company);
-                }, 800);
             };
 
             document.body.appendChild(script);
@@ -1110,28 +1115,28 @@
             // reset conversation cũ
             window.$chatwoot.reset();
 
-            setTimeout(() => {
-                let biz = JSON.parse(sessionStorage.getItem("biz"));
+            let biz = JSON.parse(sessionStorage.getItem("biz"));
 
-                if (biz && biz.url) {
-                    // set lại thông tin mới
-                    window.$chatwoot.setCustomAttributes({
-                        company_name: company,
-                        website_url: biz.url,
-                        biz_name: biz.name,
-                        industry: biz.industry
-                    });
-                }
-                else {
-                    // set lại thông tin mới
-                    window.$chatwoot.setCustomAttributes({
-                        company_name: company
-                    });
-                }
+            if (biz && biz.url) {
+                console.log(`=> syncing Attributes: biz.name ${biz.name} biz.url ${biz.url} `)
+                // set lại thông tin mới
+                window.$chatwoot.setCustomAttributes({
+                    company_name: company,
+                    website_url: biz.url,
+                    biz_name: biz.name,
+                    industry: biz.industry
+                });
+            }
+            else {
+                console.log(`=> syncing Attributes => company_name ${company}`)
+                // set lại thông tin mới
+                window.$chatwoot.setCustomAttributes({
+                    company_name: company
+                });
+            }
 
-                // mở chat mới
-                window.$chatwoot.toggle("open");                
-            }, 500);
+            // mở chat mới
+            window.$chatwoot.toggle("open");
         }
 
         document.addEventListener("DOMContentLoaded", function () {
