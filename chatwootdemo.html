@@ -1104,10 +1104,6 @@
                     websiteToken: WEBSITE_TOKEN,
                     baseUrl: BASE_URL
                 });
-
-                if (!window.$chatwoot) return;
-                // reset conversation cũ
-                window.$chatwoot.reset();
             };
 
             document.body.appendChild(script);
@@ -1117,14 +1113,14 @@
             if (!window.$chatwoot) return;
 
             // reset conversation cũ
-            //window.$chatwoot.reset();
+            window.$chatwoot.reset();
 
             let biz = JSON.parse(sessionStorage.getItem("biz"));
 
             if (biz && biz.url) {
                 console.log(`=> syncing Attributes: biz.name ${biz.name} biz.url ${biz.url} `)
                 // set lại thông tin mới
-                window.$chatwoot.setCustomAttributes({
+                window.$chatwoot.setConversationCustomAttributes({
                     company_name: company,
                     website_url: biz.url,
                     biz_name: biz.name,
