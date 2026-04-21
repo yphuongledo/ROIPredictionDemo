@@ -1104,6 +1104,10 @@
                     websiteToken: WEBSITE_TOKEN,
                     baseUrl: BASE_URL
                 });
+
+                if (!window.$chatwoot) return;
+                // reset conversation cũ
+                window.$chatwoot.reset();
             };
 
             document.body.appendChild(script);
