@@ -1088,11 +1088,11 @@
                 baseDomain: '*'
             };
 
-            window.addEventListener("chatwoot:on-message", function (e) {
-                const messageData = e.detail;
-                // e.detail sẽ chứa nội dung tin nhắn, sender, v.v.
-                console.log(`chatwoot:on-message [2] ${JSON.stringify(messageData)}`);
-            });
+            //window.addEventListener("chatwoot:on-message", function (e) {
+            //    const messageData = e.detail;
+            //    // e.detail sẽ chứa nội dung tin nhắn, sender, v.v.
+            //    console.log(`chatwoot:on-message [2] ${JSON.stringify(messageData)}`);
+            //});
 
 
             // LẮNG NGHE SỰ KIỆN READY TẠI ĐÂY
@@ -1156,18 +1156,22 @@
             // reset conversation cũ
             //window.$chatwoot.reset();
 
-            // Set user if logged in
-            let userId = "user-" + crypto.randomUUID();
-            window.$chatwoot.setUser(userId, {
-                name: userId,
-                thumbnail: ''
-            });
-            console.log(`window.$chatwoot.setUser - userId: ${userId}`);
 
             let biz = JSON.parse(sessionStorage.getItem("biz"));
 
             if (biz) {
                 console.log(`=> syncing Attributes: biz.name ${biz.name} biz.url ${biz.url} `);
+
+                // Set user if logged in
+                let userId = "user-" + crypto.randomUUID();
+                window.$chatwoot.setUser(userId, {
+                    name: userId,
+                    phone_number: biz.phone,
+                    email: biz.email,
+                    thumbnail: ''
+                });
+                console.log(`window.$chatwoot.setUser - userId: ${userId}`);
+
                 setTimeout(() => {
                     // set lại thông tin mới
                     window.$chatwoot.setCustomAttributes({
