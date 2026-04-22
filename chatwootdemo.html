@@ -1076,6 +1076,7 @@
             const BASE_URL = "https://chat.securegreen.co";
             const WEBSITE_TOKEN = "dkvsNVEt8iPLSacsw9ygMtkB";
 
+            //---https://merkurcode-nauto-console.mintlify.app/developers/widget-sdk
             window.chatwootSettings = {
                 position: "right",
                 locale: "en",
@@ -1083,8 +1084,29 @@
 
                 // Đây là phần hiển thị trong cửa sổ chat
                 welcomeTitle: `Hi there, this is ${company} 👋`,
-                welcomeDescription: "I am an AI Agent and I am here to support you."
+                welcomeDescription: "I am an AI Agent and I am here to support you.",
+                baseDomain: '*'
             };
+
+            //--event
+            window.addEventListener('chatwoot:closed', function () {
+                console.log('chatwoot:closed => Widget closed');
+            });
+
+            window.addEventListener("chatwoot:error", function (e) {
+                console.log(`Chatwoot SDK ERROR! ${e}`);
+            });
+
+            window.addEventListener('chatwoot:on-start-conversation', function () {
+                console.log('chatwoot:on-start-conversation => Conversation started');
+            });
+
+            // Track widget 
+            window.addEventListener('chatwoot:opened', function () {
+                console.log('chatwoot:opened => Set conversation context');
+            });
+
+
 
             // LẮNG NGHE SỰ KIỆN READY TẠI ĐÂY
             window.addEventListener("chatwoot:ready", function () {
@@ -1141,6 +1163,20 @@
                     company_name: company
                 });
             }
+
+            //----------Message
+            window.addEventListener("chatwoot:on-message", function (e) {
+                const messageData = e.detail;
+                // e.detail sẽ chứa nội dung tin nhắn, sender, v.v.
+                console.log(`chatwoot:on-message ${JSON.stringify(messageData)}`);
+            });
+
+            //--
+            window.addEventListener('chatwoot:postback', function (event) {
+                console.log(`chatwoot:postback Postback received: ${event.detail}`);
+                // Handle postback actions from interactive messages
+            });
+
 
             // mở chat mới
             window.$chatwoot.toggle("open");
