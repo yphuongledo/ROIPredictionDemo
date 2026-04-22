@@ -1123,7 +1123,7 @@
 
             let biz = JSON.parse(sessionStorage.getItem("biz"));
 
-            if (biz && biz.url) {
+            if (biz) {
                 console.log(`=> syncing Attributes: biz.name ${biz.name} biz.url ${biz.url} `)
                 // set lại thông tin mới
                 window.$chatwoot.setCustomAttributes({
