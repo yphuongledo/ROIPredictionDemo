@@ -1088,6 +1088,12 @@
                 baseDomain: '*'
             };
 
+            window.addEventListener("chatwoot:on-message", function (e) {
+                const messageData = e.detail;
+                // e.detail sẽ chứa nội dung tin nhắn, sender, v.v.
+                console.log(`chatwoot:on-message [2] ${JSON.stringify(messageData)}`);
+            });
+
 
             // LẮNG NGHE SỰ KIỆN READY TẠI ĐÂY
             window.addEventListener("chatwoot:ready", function () {
