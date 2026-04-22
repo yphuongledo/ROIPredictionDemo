@@ -1215,7 +1215,7 @@
                 if (biz.name)
                     document.getElementById("divHeaderText").innerHTML = biz.name;
                 document.getElementById("pIndustry").innerHTML = biz.industry;
-                document.getElementById("textBizDesc").innerHTML = biz.description.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\r?\n/g, "<br>");
+                document.getElementById("textBizDesc").innerHTML = biz.description ? biz.description.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\r?\n/g, "<br>") : '';
             } else {
                 //document.getElementById("result").innerHTML = "No data!";
             }

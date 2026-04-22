@@ -1043,7 +1043,7 @@ function validateURL(url) {
             console.log("n8n response:", result);
 
             //alert("Your request has been sent.  We will contact you soon.");
-            biz = { name: rawUrl.replace(/https?:\/\/(www\.)?/, '').split('/')[0], url: rawUrl, industry: '', phone: phone, email: email, tone: 'friendly' };
+            biz = { name: rawUrl.replace(/https?:\/\/(www\.)?/, '').split('/')[0], url: rawUrl, industry: '', phone: phone, email: email, description: '', tone: 'friendly' };
             //startFromURL2();
 
             // nếu muốn redirect sau khi gọi thành công
@@ -1108,7 +1108,7 @@ function validateURL(url) {
             const result = await response.json().catch(() => null);
 
             console.log("n8n response:", result);
-            biz = { name: bizName, url: '', phone: phone, email: email, description: bizDesc, tone: 'friendly' };
+            biz = { name: bizName, url: '', industry: '', phone: phone, email: email, description: bizDesc, tone: 'friendly' };
             goAnalyzing('', false);
 
             // nếu muốn redirect sau khi gọi thành công
