@@ -1167,25 +1167,25 @@
             let biz = JSON.parse(sessionStorage.getItem("biz"));
 
             if (biz) {
-                console.log(`=> syncing Attributes: biz.name ${biz.name} biz.url ${biz.url} `)
-                // set lại thông tin mới
-                window.$chatwoot.setCustomAttributes({
-                    company_name: company,
-                    website_url: biz.url,
-                    biz_name: biz.name,
-                    biz_Desc: biz.description,
-                    industry: biz.industry
-                });
+                console.log(`=> syncing Attributes: biz.name ${biz.name} biz.url ${biz.url} `);
+                setTimeout(() => {
+                    // set lại thông tin mới
+                    window.$chatwoot.setCustomAttributes({
+                        company_name: company,
+                        website_url: biz.url,
+                        biz_name: biz.name,
+                        biz_Desc: biz.description,
+                        industry: biz.industry
+                    });
+                }, 500);
             }
             else {
-                console.log(`=> syncing Attributes => company_name ${company}`)
+                console.log(`=> syncing Attributes => company_name ${company}`);
                 // set lại thông tin mới
                 window.$chatwoot.setCustomAttributes({
                     company_name: company
                 });
             }
-
-
 
             // mở chat mới
             window.$chatwoot.toggle("open");
