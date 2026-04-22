@@ -1075,7 +1075,11 @@
         function loadChatwoot(company) {
             const BASE_URL = "https://chat.securegreen.co";
             const WEBSITE_TOKEN = "dkvsNVEt8iPLSacsw9ygMtkB";
-
+			
+			let biz = JSON.parse(sessionStorage.getItem("biz"));
+			console.log(`loadChatwoot => biz => ${JSON.stringify(biz)}`);
+			
+			//---https://merkurcode-nauto-console.mintlify.app/developers/widget-sdk
             window.chatwootSettings = {
                 position: "right",
                 locale: "en",
@@ -1083,14 +1087,100 @@
 
                 // Đây là phần hiển thị trong cửa sổ chat
                 welcomeTitle: `Hi there, this is ${company} 👋`,
-                welcomeDescription: "I am an AI Agent and I am here to support you."
-            };
-
-            // LẮNG NGHE SỰ KIỆN READY TẠI ĐÂY
+                welcomeDescription: "I am an AI Agent and I am here to support you.",
+				/*
+				hideMessageBubble: false,				
+				useBrowserLanguage: false,				
+				launcherTitle: '👋 Need help?',
+				showPopoutButton: true,
+				showUnreadMessagesDialog: true,
+				widgetStyle: 'flat',
+				darkMode: 'auto',				
+				availableMessage: '🟢 We are online and ready to help',
+				unavailableMessage: '🔴 We are currently offline',
+				enableFileUpload: true,
+				enableEmojiPicker: true,
+				enableEndConversation: true,
+				//baseDomain: '.example.com'
+				*/
+	        };
+			
+			//--event
+			window.addEventListener('chatwoot:closed', function() {
+				console.log('chatwoot:closed => Widget closed');
+			});
+				
+			window.addEventListener("chatwoot:error", function (e) {
+				console.log(`Chatwoot SDK ERROR! ${e}`);
+			});
+		
+            //--event LẮNG NGHE SỰ KIỆN READY TẠI ĐÂY
             window.addEventListener("chatwoot:ready", function () {
                 console.log("Chatwoot SDK is ready!");
                 // Đợi 200ms để chắc chắn Session/Cookie đã được SDK thiết lập xong
-                setTimeout(() => {
+				
+				window.$chatwoot.reset();  //=> Chatwoot SDK ERROR!
+				
+				// Set user if logged in
+				const userId = "user-" + Math.random().toString(36).substring(2, 8);				
+				
+				window.$chatwoot.setUser(userId, {
+				  name: userId,
+				  phone_number: '',
+				  email: 'abc@gmail.com',
+				  avatar_url: 'http://abc.com/aa.ico',
+				  thumbnail: ''
+				});
+				
+				// Set user custom attributes
+				window.$chatwoot.setCustomAttributes({
+					company_name: company,
+					website_url: biz.url,
+					biz_name: biz.name,
+					biz_desc: biz.description,
+					industry: biz.industry
+				});
+				
+				
+				window.addEventListener('chatwoot:on-start-conversation', function() {
+					console.log('chatwoot:on-start-conversation => Conversation started');					
+				});
+  
+				// Track widget 
+				window.addEventListener('chatwoot:opened', function() {				  
+				  console.log('chatwoot:opened => Set conversation context');
+				  
+				  // Set conversation context
+				  /*window.$chatwoot.setConversationCustomAttributes({
+					company_name: "conv_" + company,
+                    website_url: "conv_" + biz.url,
+                    biz_name: "conv_" + biz.name,
+                    biz_desc: "conv_" + biz.description,
+                    industry: "conv_" + biz.industry
+				  });*/
+				});
+				
+				
+
+				//----------Message
+				window.addEventListener("chatwoot:on-message", function (e) {
+				  const messageData = e.detail;
+				  
+				  // e.detail sẽ chứa nội dung tin nhắn, sender, v.v.
+				  console.log(`chatwoot:on-message ${JSON.stringify(messageData)}`);
+				  
+				  //if (messageData.sender_type === "Contact") { // bỏ qua bot/agent
+				  //	console.log(`chatwoot:on-message sender_type: ${messageData.sender_type} content: ${messageData.content}`);
+				  //}
+				});
+				
+				//--
+				window.addEventListener('chatwoot:postback', function(event) {
+				  console.log(`chatwoot:postback Postback received: ${event.detail}`);
+				  // Handle postback actions from interactive messages
+				});
+				//----------
+				 setTimeout(() => {
                     updateChat(company);
                 }, 200);
             });
@@ -1112,13 +1202,10 @@
         function updateChat(company) {
             if (!window.$chatwoot) return;
 
-            // reset conversation cũ
-            window.$chatwoot.reset();
-
             let biz = JSON.parse(sessionStorage.getItem("biz"));
 
             if (biz && biz.url) {
-                console.log(`=> syncing Attributes: biz.name ${biz.name} biz.url ${biz.url} `)
+                /*console.log(`=> syncing Attributes: biz.name ${biz.name} biz.url ${biz.url} `)
                 // set lại thông tin mới
                 window.$chatwoot.setConversationCustomAttributes({
                     company_name: company,
@@ -1126,14 +1213,15 @@
                     biz_name: biz.name,
                     biz_Desc: biz.description,
                     industry: biz.industry
-                });
+                });*/
             }
             else {
-                console.log(`=> syncing Attributes => company_name ${company}`)
+                /*console.log(`=> syncing Attributes => company_name ${company}`)
                 // set lại thông tin mới
                 window.$chatwoot.setCustomAttributes({
                     company_name: company
                 });
+				*/
             }
 
             // mở chat mới
@@ -1141,7 +1229,16 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            let biz = JSON.parse(sessionStorage.getItem("biz"));
+             //NVTHANH TEST
+			let _biz = { name: "heavylifting.com", 
+					url : "https://heavylifting.com/",					
+					industry: "industry asbc",
+					description: "description 1233"
+				};
+			//NVTHANH TEST  set sessionStorage setItem
+			sessionStorage.setItem("biz", JSON.stringify(_biz));	
+			
+			let biz = JSON.parse(sessionStorage.getItem("biz"));
 
             if (biz) {
                 if (biz.url != '') {
@@ -1168,6 +1265,6 @@
             startChat();
         });
     </script>
-
+    
 </body>
 </html>
