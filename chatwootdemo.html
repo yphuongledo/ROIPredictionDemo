@@ -1041,7 +1041,6 @@
         <iframe id="iframeBody" style="width: 100%; height: 100vh; border:0!important"></iframe>
     </div>
 
-    <div id="previewBox" class="preview-box"></div>
     <script>
         let chatLoaded = false;
         function startChat() {
@@ -1054,15 +1053,6 @@
             //    companyInput.focus();
             //    return;
             //}
-
-            if (document.getElementById('iframeBody').src != '') { }
-            else {
-                const previewBox = document.getElementById("previewBox");
-                previewBox.style.display = "block";
-                previewBox.innerHTML = `
-            <strong>AI Agent for:</strong> ${company}
-          `;
-            }
 
             if (!chatLoaded) {
                 loadChatwoot(company);
@@ -1202,14 +1192,12 @@
                 if (biz.url != '') {
                     document.getElementById("divIFrame").style.display = '';
                     document.getElementById("standalone-page").style.display = 'none';
-                    document.getElementById("previewBox").style.display = 'none';
 
                     document.getElementById('iframeBody').src = biz.url;
                 }
                 else {
                     document.getElementById("divIFrame").style.display = 'none';
                     document.getElementById("standalone-page").style.display = '';
-                    document.getElementById("previewBox").style.display = '';
                 }
 
                 if (biz.name)
