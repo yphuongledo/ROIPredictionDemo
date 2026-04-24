@@ -993,10 +993,16 @@ function validateEmail(email) {
 }
 
 function validateURL(url) {
+    if (!url) return false;
+
+    url = url.trim();
+
     try {
-        new URL(url.startsWith('http') ? url : 'https://' + url);
-        return true;
-    } catch (_) {
+        const parsed = new URL(url);
+
+        // chỉ chấp nhận http hoặc https
+        return parsed.protocol === "http:" || parsed.protocol === "https:";
+    } catch {
         return false;
     }
 }
@@ -1018,6 +1024,8 @@ function validateURL(url) {
             alert("Invalid URL format");
             return;
         }
+        if (!phone) { document.getElementById('txtPhone').focus(); return; }
+        if (!email) { document.getElementById('txtEmail').focus(); return; }
 
         const phoneRegex = /^[0-9+\s\-\(\)]{7,20}$/;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
